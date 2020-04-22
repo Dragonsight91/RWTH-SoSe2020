@@ -2,19 +2,19 @@
 
 ## Separation of a computer in four sections
 
-- Hardware:
+- **Hardware :**
 
     collection of devices that allow the execution of programs
 
-- OS
+- **OS :**
 
     management and coordination of system hardware
 
-- Software
+- **Software :**
 
     any program that can be executed inside the OS
 
-- User
+- **User :**
 
     any device or being that can interact with the system
 
