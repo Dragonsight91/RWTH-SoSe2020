@@ -23,7 +23,6 @@
 - collection of Homework
 - working on tutor exercises together
 - mini test (15 min)
-- 
 
 ## Global Exercises
 

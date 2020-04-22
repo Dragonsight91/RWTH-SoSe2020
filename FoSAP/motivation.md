@@ -52,8 +52,9 @@ Drawing Program knows the Following instructions
 
 Start with `F` and use `F -> F[+FF][--F]F` for n-times
 
-**n = 4**
-```
+here an example generated with **n=4***
+
+```none
 F
 
 F[+FF][--F]F
@@ -64,4 +65,3 @@ F[+FF][--F]F[+F[+FF][--F]FF[+FF][--F]F][--F[+FF][--F]F]F[+FF][--F]F[+F[+FF][--F]
 
 F[+FF][--F]F[+F[+FF][--F]FF[+FF][--F]F][--F[+FF][--F]F]F[+FF][--F]F[+F[+FF][--F]F[+F[+FF][--F]FF[+FF][--F]F][--F[+FF][--F]F]F[+FF][--F]FF[+FF][--F]F[+F[+FF][--F]FF[+FF][--F]F][--F[+FF][--F]F]F[+FF][--F]F][--F[+FF][--F]F[+F[+FF][--F]FF[+FF][--F]F][--F[+FF][--F]F]F[+FF][--F]F]F[+FF][--F]F[+F[+FF][--F]FF[+FF][--F]F][--F[+FF][--F]F]F[+FF][--F]F[+F[+FF][--F]F[+F[+FF][--F]FF[+FF][--F]F][--F[+FF][--F]F]F[+FF][--F]F[+F[+FF][--F]F[+F[+FF][--F]FF[+FF][--F]F][--F[+FF][--F]F]F[+FF][--F]FF[+FF][--F]F[+F[+FF][--F]FF[+FF][--F]F][--F[+FF][--F]F]F[+FF][--F]F][--F[+FF][--F]F[+F[+FF][--F]FF[+FF][--F]F][--F[+FF][--F]F]F[+FF][--F]F]F[+FF][--F]F[+F[+FF][--F]FF[+FF][--F]F][--F[+FF][--F]F]F[+FF][--F]FF[+FF][--F]F[+F[+FF][--F]FF[+FF][--F]F][--F[+FF][--F]F]F[+FF][--F]F[+F[+FF][--F]F[+F[+FF][--F]FF[+FF][--F]F][--F[+FF][--F]F]F[+FF][--F]FF[+FF][--F]F[+F[+FF][--F]FF[+FF][--F]F][--F[+FF][--F]F]F[+FF][--F]F][--F[+FF][--F]F[+F[+FF][--F]FF[+FF][--F]F][--F[+FF][--F]F]F[+FF][--F]F]F[+FF][--F]F[+F[+FF][--F]FF[+FF][--F]F][--F[+FF][--F]F]F[+FF][--F]F][--F[+FF][--F]F[+F[+FF][--F]FF[+FF][--F]F][--F[+FF][--F]F]F[+FF][--F]F[+F[+FF][--F]F[+F[+FF][--F]FF[+FF][--F]F][--F[+FF][--F]F]F[+FF][--F]FF[+FF][--F]F[+F[+FF][--F]FF[+FF][--F]F][--F[+FF][--F]F]F[+FF][--F]F][--F[+FF][--F]F[+F[+FF][--F]FF[+FF][--F]F][--F[+FF][--F]F]F[+FF][--F]F]F[+FF][--F]F[+F[+FF][--F]FF[+FF][--F]F][--F[+FF][--F]F]F[+FF][--F]F]F[+FF][--F]F[+F[+FF][--F]FF[+FF][--F]F][--F[+FF][--F]F]F[+FF][--F]F[+F[+FF][--F]F[+F[+FF][--F]FF[+FF][--F]F][--F[+FF][--F]F]F[+FF][--F]FF[+FF][--F]F[+F[+FF][--F]FF[+FF][--F]F][--F[+FF][--F]F]F[+FF][--F]F][--F[+FF][--F]F[+F[+FF][--F]FF[+FF][--F]F][--F[+FF][--F]F]F[+FF][--F]F]F[+FF][--F]F[+F[+FF][--F]FF[+FF][--F]F][--F[+FF][--F]F]F[+FF][--F]F
 ```
-
