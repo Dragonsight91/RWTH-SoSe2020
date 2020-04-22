@@ -94,4 +94,4 @@
 
 ## Simplified computer architecture
 
-!["Main Components of a computer"](images/Computer_Arch_Simplified.jpg)
+!["Main Components of a computer"](BUS/images/Computer_Arch_Simplified.jpg)
