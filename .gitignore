@@ -1,1 +1,6 @@
 **/Russian Courses/
+*.log
+*.aux
+*.fls
+*.fdb_latexmk
+*.synctex.gz
