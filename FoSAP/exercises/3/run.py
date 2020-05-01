@@ -1,5 +1,6 @@
 from nfa_simulate import NFA
 import os
+from time import time
 def run():
     workdir = os.path.dirname(os.path.abspath(__file__))
     
@@ -13,14 +14,16 @@ def run():
             nfa.addTransition(transition[0], transition[1], transition[2])
 
     with open(os.path.join(workdir, "2020_H09_input"), "r") as f:
-        word = f.read().split("\n")[3]    
+        words = f.read().split("\n")   
 
-    print(len(word))
-    out = nfa.simulate(7, word)
+    
 
-    print(str(out))
+    for index, word in enumerate(words):
+        print()
+        start = time()
+        out = nfa.simulate(7, word)
+        print(f'Word {index}: {time()-start}s')
+        print(f'Results: {str(out)}')
 
 if __name__ == "__main__":
     run()
-
-# 
