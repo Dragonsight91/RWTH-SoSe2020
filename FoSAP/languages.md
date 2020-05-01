@@ -50,7 +50,7 @@ A neutral element ![formula](https://render.githubusercontent.com/render/math?ma
 
 Question: Is the neutral element in a monoid clear?
 
-Yes, because ![formula](https://render.githubusercontent.com/render/math?math=e_1\circ%20e_2%3De_1) and ![formula](https://render.githubusercontent.com/render/math?math=e_2\circ%20e_1%3De_2).
+Yes, because ![formula](https://render.githubusercontent.com/render/math?math=e_1\circ%20e_2%3De_1) and ![formula](https://render.githubusercontent.com/render/math?math=e_1\circ%20e_2%3De_2).
 
 #### Examples
 
