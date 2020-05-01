@@ -1,2 +1,7 @@
 **/Russian Courses/
 **/__pycache__/
+*.log
+*.aux
+*.fls
+*.fdb_latexmk
+*.synctex.gz
