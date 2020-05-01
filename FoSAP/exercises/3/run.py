@@ -23,6 +23,7 @@ def run():
         start = time()
         out = nfa.simulate(7, word)
         print(f'Word {index}: {time()-start}s')
+        print(f'Length: {len(word)}')
         print(f'Results: {str(out)}')
 
 if __name__ == "__main__":
