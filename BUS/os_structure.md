@@ -91,7 +91,20 @@
   - Today: _DMA (Direct Memory Access)_
     - seperate controller for the movement of data
     - takes load away from CPU
+- Hardware Interrupts tell the CPU when an external task is done
+  - CPU tries to access HDD
+  - HDD Controller starts to work on retrieving the data
+  - CPU continues to work on other stuff
+  - HDD controller sends an interrupt signal to CPU
+  - CPU stops and listens to HDD controller
+  - data has an end-marker, if end is reached, CPU continues to work.
 
 ## Simplified computer architecture
 
 !["Main Components of a computer"](images/Computer_Arch_Simplified.jpg)
+
+## The OS
+
+- Collection of Programs that allow efficient and comfortable use of a computer
+  - Platform for program execution on computer hardware
+  - Efficient allocation of hardware between multiple users
