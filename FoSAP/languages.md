@@ -27,6 +27,10 @@ An alphabet ![formula](https://render.githubusercontent.com/render/math?math=\Si
 Therefore for any word ![formula](https://render.githubusercontent.com/render/math?math=w\in%20L) with ![formula](https://render.githubusercontent.com/render/math?math=L) as our language, our set of words, every symbol in ![formula](https://render.githubusercontent.com/render/math?math=s\in%20w), ![formula](https://render.githubusercontent.com/render/math?math=s\in\Sigma)
 applies.
 
+- In every language ![formula](https://render.githubusercontent.com/render/math?math=L) there exists an empty word, ![formula](https://render.githubusercontent.com/render/math?math=\epsilon).
+
+- A Language can be finite or not
+
 
 #### Examples
 
@@ -46,7 +50,7 @@ A neutral element ![formula](https://render.githubusercontent.com/render/math?ma
 
 Question: Is the neutral element in a monoid clear?
 
-Yes, because ![formula](https://render.githubusercontent.com/render/math?math=e_1\circ%20e_2%3De_1) and ![formula](https://render.githubusercontent.com/render/math?math=e_1\circ%20e_2%3De_2).
+Yes, because ![formula](https://render.githubusercontent.com/render/math?math=e_1\circ%20e_2%3De_1) and ![formula](https://render.githubusercontent.com/render/math?math=e_2\circ%20e_1%3De_2).
 
 #### Examples
 
@@ -64,7 +68,11 @@ Yes, because ![formula](https://render.githubusercontent.com/render/math?math=e_
 
 #### Question:
 
-Is ![formula](https://render.githubusercontent.com/render/math?math=\lbrace-16,17,18\rbrace) a generating system for ![formula](https://render.githubusercontent.com/render/math?math=(Z,%2b))?
+- Is ![formula](https://render.githubusercontent.com/render/math?math=\lbrace-16,17,18\rbrace) a generating system for ![formula](https://render.githubusercontent.com/render/math?math=(Z,%2b))?
+
+  Yes, because: 
+  
+  ![formula](https://render.githubusercontent.com/render/math?math=-16%2b17%3d1\Rightarrow%20Z=\lbrace-16a%2b17b|a,b\in%20N\rbrace)
 
 Is ![formula](https://render.githubusercontent.com/render/math?math=\lbrace3,5,7\rbrace) a generating system for ![formula](https://render.githubusercontent.com/render/math?math=(Z_8,\cdotp))?
 
