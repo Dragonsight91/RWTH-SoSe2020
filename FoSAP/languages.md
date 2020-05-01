@@ -11,7 +11,7 @@
 
 Words have a natural and intuitive mathematical structure. We can concatenate words, split a word, and parse sentences naturally. We can also get a section of the word and remove parts to get a new word.
 
-Flughafen -> Flug || Hafen
+Flughafen -> Flug  Hafen
 
 Baumhaus -> Baum || Haus
 
