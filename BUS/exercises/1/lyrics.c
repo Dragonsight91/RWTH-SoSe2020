@@ -3,7 +3,7 @@
 #define MAX_CHARS 50
 
 // not allowed to use index operator []
-//ignore the case when the string is empty
+// ignore the case when the string is empty
 void correct_last_character(int num_lines, int max_chars, char c[num_lines][max_chars])
 {
     for (int i = 0; i < num_lines; i++)
