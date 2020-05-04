@@ -27,4 +27,3 @@ It solves a computational problem with a series of computations described by:
 
 ## Example #1: _Sorting_
 
-ajsdjhg
