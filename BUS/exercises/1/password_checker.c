@@ -8,21 +8,40 @@
 
 int main(void)
 {
+    // [===========]
     char *password_input = malloc(BUFFER_SIZE * sizeof(char));
 
-    // we set access to true when the user is authorized
-    bool *access = malloc(sizeof(bool));
-    *access = false;
+    // bool *access = malloc(sizeof(bool));
+    // *access = false;
+    // [===========][=]
 
     // SOLUTION
     printf("%p\n", password_input);
-    printf("%p\n", access);
 
     printf("\n Enter the password: \n");
 
     scanf("%s", password_input);
+    // 1. [===========[=]=======] char overwrites boolean
+    // 2. [=====================] BOOLEAN NEVER CREATED
 
-    if (strcmp(password_input, "BuS20_Hero"))
+    bool *access = malloc(sizeof(bool));
+    *access = false;
+    printf("%p\n", access);
+
+    // [===========[=]] boolean overwrites char
+
+
+    // input filter
+    char testInput[BUFFER_SIZE] = "";
+    for(int i = 0; i < BUFFER_SIZE-1; i++){
+        *(testInput + i) = *(password_input + i);
+    }     
+    *(testInput + BUFFER_SIZE) = '\0';
+
+
+    printf("Password Given: %s\n", testInput);
+
+    if (strcmp(testInput, "BuS20_Hero"))
     {
         printf("\n Wrong Password \n");
     }
@@ -32,8 +51,7 @@ int main(void)
         *access = true;
     }
 
-    if (*access)
-    {
+    if(*access == true){
         printf("\n Root privileges given to the user. !!!DANGER ZONE!!!\n");
     }
 
