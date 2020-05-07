@@ -19,3 +19,19 @@ I cannot however upload the videos from moodle, which is why i try to have as mu
 ## All of those Lectures are in german
 
 Sorry, i wish it all was in english, but i can't change it either. If you need it in english, look at the Notes
+
+## File Availability
+
+All Notes are available as the following file formats:
+
+1. Markdown
+    - This is mostly because Markdown is fast and easy to write and Github has native markdown rendering.
+    - files ending in `.md`
+
+2. LaTeX
+    - These are the source files for LaTeX, so we can make it into PDFs
+    - files ending in `.tex`
+
+3. PDF
+    - This is for you to use and easy offline reading on any device
+    - files ending in `.pdf`
