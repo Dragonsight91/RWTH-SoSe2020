@@ -1,0 +1,27 @@
+acpi			        cpufreq-bench.conf  foomatic	    highlight	    ld.so.conf.d	makepkg.conf				            netconfig	            passwd		        securetty      tmpfiles.d
+adjtime			        cron.d		        fstab	        host.conf	    libao.conf	    man_db.conf				                netctl		            passwd-		        security        trusted-key.key
+alsa			        cron.daily	        fuse.conf	    hostname	    libaudit.conf   manjaro-firefox-developer-edition.ini   NetworkManager          passwd.OLD	        sensors3.conf   ts.conf
+amd			            cron.deny	        gai.conf	    hosts		    libblockdev	    manjaro-firefox.ini			            nfs.conf	            php		            sensors.d       udev
+anacrontab		        cron.hourly	        gbm		        hp		        libnl		    manjaro-firefox-kde.ini		            nfsmount.conf	        pkcs11		        services        udisks2
+apparmor	    	    cron.monthly	    gconf	        i3		        libpaper.d	    manjaro-release			                nginx		            polkit-1	        shadow	        ufw
+apparmor.d	    	    cron.weekly	        gdb		        i3status.conf   libreoffice	    manjaro-thunderbird.ini		            nscd.conf	            ppp		            shadow-         updatedb.conf
+arch-release    	    crypttab	        gemrc	        idmapd.conf	    libva.conf	    mdadm.conf				                nsswitch.conf	        printcap	        shells	        UPower
+asound.conf 		    cups		        geoclue	        ifplugd	        lightdm	        mime.types				                ntp.conf	            profile		        signond.conf    vbox
+audisp		    	    dbus-1		        gimp	        ImageMagick-7   lirc		    mke2fs.conf				                OpenCL		            profile.d		    skel	        vconsole.conf
+audit			        dconf		        group	        initcpio	    locale.conf	    mkinitcpio.conf			                openldap	            protocols		    slsh.rc         vdpau_wrapper.cfg
+avahi			        default		        group	        inputrc	        locale.gen	    mkinitcpio.conf.old		                openmpi	                pulse		        ssh	            vimrc
+bash.bash_logout	    depmod.d	        grub.d	        iproute2	    localtime	    mkinitcpio.d			                openswap.conf	        rc_keymaps	        ssl	            vpnc
+bash.bashrc		        dhcpcd.conf	        gshadow	        iptables	    login.defs	    modprobe.d				                openvpn	                rc_maps.cfg	        sudoers         wgetrc
+bash_completion.d	    dnsmasq.conf	    gshadow-	    issue		    logrotate.conf  modules-load.d			                os-release	            request-key.conf	sudoers.d       wpa_supplicant
+bindresvport.blacklist	e2scrub.conf	    gss		        java11-openjdk  logrotate.d	    mono					                pacman.conf	            request-key.d	    sysctl.d        X11
+binfmt.d		        environment	        gssproxy        java-openjdk	lsb-release	    motd					                pacman.d	            resolv.conf	        syslog-ng       xattr.conf
+bluetooth		        ethertypes	        gtk-2.0	        kernel	        lvm		        mpd.conf				                pacman-mirrors.conf     resolvconf.conf	    systemd         xdg
+ca-certificates	        eports		        gtk-3.0	        krb5.conf	    machine-id	    mtab					                pamac.conf	            rpc		            texmf	        xinetd.d
+cifs-utils		        exports.d	        gufw	        ld.so.cache	    mailcap	        nanorc				                    pam.d		            rsyncd.conf	        tlp.conf        zsh
+conf.d			        fonts		        healthd.conf    ld.so.conf	    mail.rc	        ndctl					                papersize	            sane.d		        tlp.d
+% time     seconds  usecs/call     calls    errors syscall
+------ ----------- ----------- --------- --------- ----------------
+100.00    0.000008           1         6           fstat
+  0.00    0.000000           0         5           openat
+------ ----------- ----------- --------- --------- ----------------
+100.00    0.000008           0        11           total

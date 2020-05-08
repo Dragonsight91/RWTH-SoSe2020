@@ -1,6 +1,5 @@
 #!/bin/bash
 ROOT=""
-IFS_TEMP="$IFS"
 function list_dirs() {
     DIRLIST=$(find $1 -maxdepth 1 -type d) # get all subdirectories. 
     FLIST=$(find $1 -maxdepth 1 -type f)   # get all files in directory

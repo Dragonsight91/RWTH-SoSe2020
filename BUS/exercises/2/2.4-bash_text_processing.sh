@@ -14,7 +14,7 @@ ls -sh | grep -ve "^[total]" | awk '{ t = $1; $1 = $2; $2 = t; print; }'
 # 2.4 c)
 # GROUP=1 echo $() -> provide a variable to the command, set it to value 1-4 to get groupings of 1-3 people or the nullgroup
 # sort teamnamen.txt | uniq -c -> initial setup, get all the teamnames grouped together, including empty
-# awk '{print $1}' | grep "n" | uniq -c -> get all groups of size n, to match anything else
+# awk '{print $1}' | sort -n | uniq -c -> get all groups of size n, to match anything else
 # head -n $GROUP | tail -n 1 -> get the group we specified in GROUP
 GROUP=1 echo $(sort teamnamen.txt | uniq -c | awk '{print $1}' | sort -n | uniq -c | head -n $GROUP | tail -n 1)
 
