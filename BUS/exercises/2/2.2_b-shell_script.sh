@@ -1,25 +1,18 @@
 #!/bin/bash
 
 # test if argumaents were given
-if [ -z $1 ] | [ -z $2 ]
-then
-    echo "The syntax is: command {PID} {TIME}"
+if [[ -z $1 ]] | [[ -z $2 ]]; then
+    echo "The syntax is: ${PWD} {PID} {TIME}"
     exit
 fi
 
-# save data to variables
-PID=$1
-TIME=$2
+PROCESS="$(ps | grep ${PID})"
 
-PROCESS="$(ps ${PID} | grep ${PID})"
-
-# while process is running
+# while process is running, print "Process {PID} running"
 while [[  -n  $PROCESS ]]; do
-    
-    echo "process ${PID} running"
-    sleep $TIME
-    PROCESS="$(ps ${PID} | grep ${PID})"
-
+    echo "process ${1} running"
+    sleep $2
+    PROCESS="$(ps | grep ${1})"
 done
 
 echo "Process not running"

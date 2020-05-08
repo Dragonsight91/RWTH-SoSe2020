@@ -1,9 +1,18 @@
+# directories
 **/Russian Courses/
 **/__pycache__/
+**/.vscode/
+
+# filetypes
 *.log
 *.aux
 *.fls
 *.fdb_latexmk
 *.synctex.gz
-**/blatt04.pdf
-**/.vscode/
+*.toc
+*.out
+*.bbl
+*.blg
+
+# specific files
+blatt04.pdf

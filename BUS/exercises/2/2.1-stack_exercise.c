@@ -68,11 +68,10 @@ bool pop(StackNode **pointer2root, char **pointer2command)
     else
     {
         StackNode *temp = *pointer2root; // get current stack element
-        StackNode *next_node = temp->next_node; // get next root pointer
         *pointer2command = temp->command; // set command pointer
-
-        *pointer2root = next_node; // move root pointer
+        *pointer2root = temp->next_node; // move root pointer
         free(temp); // free memory
+
         return true; // something was indeed popped off
     }
 }

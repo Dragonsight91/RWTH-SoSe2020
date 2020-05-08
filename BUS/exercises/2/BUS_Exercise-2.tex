@@ -1,0 +1,351 @@
+% format definition
+\documentclass[a4paper, 11pt]{article}
+\usepackage[margin=.9in]{geometry}
+\usepackage[utf8]{inputenc}
+
+% extra packages
+\usepackage{hyperref}
+\usepackage{listings}
+\usepackage{color}
+\usepackage{amssymb}
+
+% Syntax highlighting
+\definecolor{commentsColor}{rgb}{0.497495, 0.497587, 0.497464}
+\definecolor{keywordsColor}{rgb}{0.000000, 0.000000, 0.635294}
+\definecolor{stringColor}{rgb}{0.558215, 0.000000, 0.135316}
+\lstset{ %
+  backgroundcolor=\color{white},   % choose the background color; you must add \usepackage{color} or \usepackage{xcolor}
+  basicstyle=\footnotesize,        % the size of the fonts that are used for the code
+  breakatwhitespace=false,         % sets if automatic breaks should only happen at whitespace
+  breaklines=true,                 % sets automatic line breaking
+  captionpos=b,                    % sets the caption-position to bottom
+  commentstyle=\color{commentsColor}\textit,    % comment style
+  deletekeywords={...},            % if you want to delete keywords from the given language
+  escapeinside={\%*}{*)},          % if you want to add LaTeX within your code
+  extendedchars=true,              % lets you use non-ASCII characters; for 8-bits encodings only, does not work with UTF-8
+  frame=tb,	                   	   % adds a frame around the code
+  keepspaces=true,                 % keeps spaces in text, useful for keeping indentation of code (possibly needs columns=flexible)
+  keywordstyle=\color{keywordsColor}\bfseries,       % keyword style
+  otherkeywords={*,...},           % if you want to add more keywords to the set
+  numbers=left,                    % where to put the line-numbers; possible values are (none, left, right)
+  numbersep=5pt,                   % how far the line-numbers are from the code
+  numberstyle=\tiny\color{commentsColor}, % the style that is used for the line-numbers
+  rulecolor=\color{black},         % if not set, the frame-color may be changed on line-breaks within not-black text (e.g. comments (green here))
+  showspaces=false,                % show spaces everywhere adding particular underscores; it overrides 'showstringspaces'
+  showstringspaces=false,          % underline spaces within strings only
+  showtabs=false,                  % show tabs within strings adding particular underscores
+  stepnumber=1,                    % the step between two line-numbers. If it's 1, each line will be numbered
+  stringstyle=\color{stringColor}, % string literal style
+  tabsize=2,	                     % sets default tabsize to 2 spaces
+  title=\lstname,                  % show the filename of files included with \lstinputlisting; also try caption instead of title
+  columns=fixed                    % Using fixed column width (for e.g. nice alignment)
+}
+
+\author{Thilo Metzlaff\\406247 \and Mats Frenk\\393702\and René van Emelen\\406008}
+\title{BUS Exercise 2}
+\begin{document}
+    % titlepage
+    \maketitle
+    \newpage
+
+    % contents
+    \tableofcontents
+    \newpage
+
+    % section 0
+    \section{Introduction}
+    Welcome To this special endeavour, where i write every single thing in \LaTeX{}
+    How is any of this gonna work?\\
+    Simple: With patience and a format definition. Therefore, please let me define the format of this.
+
+    \subsection*{THE FORMAT}
+    \begin{itemize}
+        \item All files will be inside of an \texttt{exercise.zip}
+        \item Every file will be named similar to the sections in here, so\\
+              \texttt{2.1-stack\_exercise.c} is Exercise 2, section 1.
+        \item Every Solution \textbf{WILL} be in this pdf, but not necessarily 
+              anything predefined by the exercise.
+        \item Any explanation will be both in this PDF as well as in each file.
+        \item This explanation will be in each PDF, in case someone who doesn't
+              know the format tries to correct the exercises
+    \end{itemize}
+    \newpage
+
+    % section 1
+    \section{Stack Exercise}
+    To create a stack, one needs three things:
+    \begin{itemize}
+        \item A root node, which is a pointer to the last element added
+              to the stack or \texttt{NULL}, if the stack is empty.
+        \item A \texttt{StackNode}, which has content and a pointer to the previously 
+              added node, or \texttt{NULL}, if it's the last element
+        \item Data for the \texttt{StackNode} to point to.
+    \end{itemize}
+    Since the Exercise already predefined the Structure and creation of the \texttt{StackNode}, 
+    we didn't have to make that, but we \emph{DO} have to define the behavior of the \texttt{push} and
+    \texttt{pop} functions
+
+    % push function subsection
+    \subsection{The \texttt{push()} Function}
+    The \texttt{push} function takes an element and pushes it onto the stack.
+    Pushing to a stack has 2 cases we have to handle:
+    \begin{itemize}
+        \item The stack is empty, making the \texttt{root pointer} point to \texttt{NULL}
+        \item There is at least one item on the stack, making the \texttt{root pointer} point to the last item.
+    \end{itemize}
+    Therefore we first have to test wether \texttt{root} points to \texttt{NULL}.
+    \\
+    In the first case, we only have to dereference the \texttt{root pointer} and point it to a newly created 
+    \texttt{StackNode}, due to the way \texttt{StackNode} is defined.
+    \\\\
+    The second case has some more actions, but it's not much more complicated. Here are the steps:
+    \begin{enumerate}
+        \item create a new \texttt{StackNode} and call it \texttt{temp}
+        \item point the \texttt{next\_node} pointer of the \texttt{temp StackNode} to the 
+              last element of the stack
+        \item dereference \texttt{root} and point it to \texttt{temp}
+    \end{enumerate}
+    \begin{lstlisting}[language=C,caption={The \texttt{push()} Function},label={push}]
+void push(StackNode **pointer2root, char *command)
+{
+  // YOUR SOLUTION GOES HERE ...
+  if (*pointer2root == NULL)
+  {
+    // just set a new node, there is nothing on the stack
+    *pointer2root = newNode(command); 
+  }
+  else
+  {
+    StackNode *temp = newNode(command); // get a new node
+    temp->next_node = *pointer2root;    // move node pointer
+    *pointer2root = temp;               // move root pointer
+  }
+}
+    \end{lstlisting}
+    % pop function subsection
+    \subsection{The \texttt{pop()} Function}
+    The \texttt{pop} function pops an element from the top of the stack and makes its data (in our case a \texttt{string}) 
+    available to the program. When trying to pop off an element we can encounter two cases:
+    \begin{itemize}
+      \item The stack is empty
+      \item The stack has at least one element
+    \end{itemize}
+    In the first case, we can return \texttt{\color{blue}{false}}. If we do have an element, we have to do the following, 
+    before returning \texttt{\color{blue}{true}}:
+    \begin{enumerate}
+      \item get the last node from the stack\\
+            \lstinline{StackNode *temp = *pointer2root;}
+      \item get the next node and point to it in \texttt{root} \\
+            \lstinline{*pointer2command = temp->command;}
+      \item give a pointer to the data to the user \\
+            \lstinline{*pointer2root = temp->next_node;}
+      \item free the memory space that is now unused \\
+            \lstinline{free(temp);}
+    \end{enumerate}
+    \begin{lstlisting}[language=C,caption={The \texttt{pop()} Function},label={pop}]
+bool pop(StackNode **pointer2root, char **pointer2command)
+{
+  // YOUR SOLUTION GOES HERE ...
+  if (*pointer2root == NULL)
+  {
+    return false; // nothing on the stack
+  }
+  else
+  {
+    StackNode *temp = *pointer2root; // get current stack element
+    *pointer2command = temp->command; // set command pointer
+    *pointer2root = temp->next_node; // move root pointer
+    free(temp); // free memory
+
+    return true; // something was indeed popped off
+  }
+}
+    \end{lstlisting}
+    \newpage
+
+    % section 2
+    \section{Bash Scripting}
+
+    %subsection exercise a
+    \subsection{a - Replacing the first Occurence of a Character}
+    To replace things, we can simply use \texttt{sed}. Here we need to replace the first \texttt{1} 
+    with a \texttt{2}. the Regex for this is \lstinline{'s_1_2_1'}. \\
+    To do this easily, we can create a script file, which takes a string as its argument and pipes 
+    it into \texttt{sed}, like this:
+    \begin{lstlisting}[language=Bash]
+#!/bin/bash
+
+echo "$1" | sed 's_1_2_1'
+    \end{lstlisting}
+
+    % subsection exercise b
+    \subsection{b - Watching a Process}
+    To list all processes, we can use \texttt{ps}. To get the process with the specified PID, we pipe
+    its output into \texttt{grep}. we then use a \texttt{while} loop, checking wether our listing has vanished. 
+    While in that loop, we echo \texttt{\color{stringColor}{"process \$\{PID\} running"}}.
+    When the loop exits, we echo \texttt{\color{stringColor}{"Process not running."}}. And most importantly, we
+    test if the user has specified \textbf{BOTH} arguments. The following piece of code accomplishes all of that.
+
+    \begin{lstlisting}[language=Bash,caption={The Bash code that keeps on giving}]
+#!/bin/bash
+
+# test if argumaents were given
+if [[ -z $1 ]] | [[ -z $2 ]]; then
+  echo "The syntax is: ${PWD} {PID} {TIME}"
+  exit
+fi
+
+PROCESS="$(ps | grep ${PID})"
+
+# while process is running, print "Process {PID} running"
+while [[  -n  $PROCESS ]]; do
+  echo "process ${1} running"
+  sleep $2
+  PROCESS="$(ps | grep ${1})"
+done
+
+echo "Process not running"
+    \end{lstlisting}
+    \newpage
+
+    % subsection exercise c
+    \subsection{c - Bash Code Analysis}
+    We were given the following code (it has been prettyfied for readability):
+    \begin{lstlisting}[language=Bash,caption={}]
+S=0
+for f in $(find . -name "*.c"); do
+  S=$( ( $S + $( wc -l $f | awk '{ print $1 }' ) ) )
+done
+echo $S
+    \end{lstlisting}
+    I will now give a line-by line explanation of each command and action that happens.
+    \begin{enumerate}
+      \item[\texttt{1} -] Set variable \texttt{S} to \texttt{0} 
+      \item[\texttt{2} -] Get all names of C source files and loop through them
+        \begin{itemize}
+          \item \lstinline{ $( find . -name "*.c" )}  $\rightarrow$ get all filenames of C source files from the current directory 
+          \item \lstinline{for f in $(expr); do} $\rightarrow$ loop through all filenames
+        \end{itemize} 
+      \item[\texttt{3} -] Add the number of lines of the current file to S
+        \begin{itemize}
+          \item \lstinline+$(wc -l | awk '{ print \$1 }' )+ $\rightarrow$ get the number of lines in \texttt{f}
+          \item \lstinline{$(( S + $(expr) ))} $\rightarrow$ add the values of S and expr
+          \item \lstinline{S=$(expr)} $\rightarrow$ set S to the value of expr
+        \end{itemize}
+      \item[\texttt{4} -] The end of the \texttt{for-loop}
+      \item[\texttt{5} -] echo \texttt{S}, the total combined length of all C source files.
+    \end{enumerate}
+    
+    %subsection exercise d
+    \subsection{d - Recursive File Listing}
+    To list Files recursively we only need a function that lists files recursively and an input filter.
+    Filtering the input is quite easy, we test if \lstinline{$1} is set. If it isn't, we take the current 
+    directory and feed it to the function, otherwise we take the user's input and feed that to our function.\\
+    This function needs to keeep track of where it was executed, so we can use \lstinline{$PWD}. 
+    It also needs to keep track of all files in the current directory, as well as all directories, for which we can 
+    use \lstinline{find} with the type argument.\\
+    The last thing we need is loops and recursive calls, and indent modification. But to make all things easier,
+    we first set \texttt{IFS} to only use newline, or this will not work with directories that have spaces in them.
+    Now that we have defined all the things needed, here's the code:\newpage
+    \begin{lstlisting}[language=Bash]
+#!/bin/bash
+function list_dirs() {
+DIRLIST=$(find $1 -maxdepth 1 -type d) # get all subdirectories. 
+FLIST=$(find $1 -maxdepth 1 -type f)   # get all files in directory
+
+
+IFS=$'\n'
+# open all directories
+for i in $DIRLIST; do
+  # are we trying to open ourselves?
+  if [[ $1 != $i ]]; then
+
+    # there's some weirdness going on
+    printf "%$(($2 + 2))s\e[1m\e[4m\e[38;5;6mDIRECTORY:\e[0m $(echo $i) \n"
+
+    # recursive open
+    list_dirs "${i}" $(($2 + 2))
+  else
+
+    # if we are in the root directory, we can print that, otherwise we don't care
+    if [[ $i == $PWD ]] | [[ $i == "./" ]]; then
+      printf "\n%${2}s\e[1m\e[4m\e[38;5;6mDIRECTORY:\e[0m $(echo $PWD | sed 's_^.^/\b__') \n"
+    fi
+    # list all files in directory
+    for j in $FLIST; do
+      # if it's not empty
+      if [[ $j != -z ]]; then
+      # print the current file
+        printf "%$(($2 + 2))s\e[1mFILE:\e[0m \e[93m$(echo $j)\e[0m \n"
+      fi
+    done
+  fi
+done
+}
+
+if [[ -z $1 ]]; then
+  list_dirs $PWD 0
+else
+  list_dirs $1 0
+fi
+    \end{lstlisting}
+
+    \newpage
+
+    % section 3
+    \section{Syscalls and Strace}
+    
+    \subsection{a - The Nature of Syscalls}
+    A system call is an interface between a given application and the Linux kernel. Using a system call, one can issue commands to the kernel and communicate with it. 
+    One can also use these calls to access system resources.
+    
+    \subsection{b - Describing specific Syscalls}
+    \begin{itemize}
+      \item[\texttt{accept} -] Extracts the first pending connection request from the queue of pending connections for the listening socket. 
+      \item[\texttt{brk} -] Changes the location of the program break, letting a program allocate or deallocate memory, depending on wether the break is increased (allocation) or decreased (deallocation).
+      \item[\texttt{mmap} -] Creates a new mapping for a file or directory in the virtual address space.
+      \item[\texttt{open} -] Opens or creates a file specified by pathname, depending on its existence and the \texttt{O\_CREAT} flag.
+      \item[\texttt{write} -] Writes up to \texttt{count} bytes from the buffer, starting at \texttt{buf} to the file descriptor \texttt{fd}
+    \end{itemize}
+    
+    \subsection{c - The Nature of Strace}
+    \texttt{strace} is a command to trace syscalls and signals from a specified command. It runs a command until it exits, intercepting and recording all syscalls and signals of the process.
+    
+    \subsection{d - Stracing the ls command}
+    \texttt{ls /etc} lists all subdirectories of \texttt{/etc}, needing two different syscalls, namely 
+    \texttt{fstat}, which gets information about an open file and \texttt{open} or \texttt{openat}, which open files at a specified path.\\
+    \texttt{ls -la} also prints the access permissions, link count, owner, group, file size, mlast modify date and filename. For this it needs \textbf{A LOT} more syscalls, because it also follows symlinks and reads more data.
+    This makes it take slightly longer, but still uses the same syscalls.
+    \newpage
+
+    % section 4
+    \section{Bash Text Processing}
+    There's really not that much to describe here, so descriptions will be quite short.
+    
+    \subsection{a - Listing Files and Directories with Size}
+    There actually already is a command for this, which is \texttt{ls}, it just adds a total size, which we can 
+    remove with grep. The full command then looks like this:\\ 
+    \lstinline{ls -sh | grep -ve "^[total]"}
+
+    \subsection{b - Switching Size and Name of a's Output}
+    To do this, we only have to pipe to the prevous' command's output into awk and print the columns switched, 
+    like this:\\
+    \lstinline+ls -sh | grep -ve "^[total]" | awk '{ print $2, $1; }'+
+
+    \subsection{c - Processing Text File and Groupings}
+    As i didn't read the exercise properly, i assumed that i could just list all things in a nice format and be done, 
+    but i realized that that was actually the next exercise... So i just modified the command from the next subsection.\\
+    Getting to the actual command, i used \lstinline{sort teamnamen.txt} to first get a sorted list, because i then piped it 
+    into \lstinline{uniq -c}, which gives a counted list of unique elements. After that, it is piped into \lstinline+awk {print $1}'+, 
+    to strip the group names, then numerically sorted with \lstinline{sort -n}, only to be piped into \lstinline{uniq -c} again, so we can get a nicer output.
+    The Command also uses a temporary variable \lstinline{GROUP}, so one can change the output. The last part then gets piped into 
+    \lstinline{head -n $GROUP} and then to \lstinline{tail -n 1} so it only gives us the line we want. \texttt{GROUP} can change that output to be either a group 
+    of 1-3 people, or the nullgroup. And this is said monstrosity:\\\\
+    \lstinline+GROUP=1 echo $(sort teamnamen.txt | uniq -c | awk '{print $1}' | sort -n | uniq -c | head -n $GROUP | tail -n 1)+ 
+
+    \subsection{d - More Text Processing and grouping}
+    Since i already explained everything up to the last \texttt{awk} command in the previous, i will not explain it again.
+    The Last command, without \texttt{echo}, \texttt{head} and \texttt{tail} is piped into awk to pretty print the output, making it into the following monstrosity:\\\\
+    \lstinline+sort teamnamen.txt | uniq -c | awk '{print $1}' | sort -n | uniq -c | awk '{if ($2!="1" && $2!="2" && $2!="3") print "\n"$2, "Nullgroup"; else print $1, $2}'+
+
+\end{document}

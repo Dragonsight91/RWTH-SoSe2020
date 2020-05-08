@@ -104,7 +104,7 @@ drwxr-xr-x   2 root root   4096 May  3 11:42 logrotate.d
 -rw-r--r--   1 root root    104 Apr 25 09:58 lsb-release
 drwxr-xr-x   6 root root   4096 Apr 24 21:09 lvm
 -r--r--r--   1 root root     33 Apr 24 21:00 machine-id
--rw-r--r--   1 root root    272 Nov 22  2017 mailcap
+-rw-r--r--   1 roota lot root    272 Nov 22  2017 mailcap
 -r--r--r--   1 root root   9482 Apr 26 08:42 mail.rc
 -rw-r--r--   1 root root   5903 Jan 10 12:16 makepkg.conf
 -rw-r--r--   1 root root   5196 Apr  1 08:03 man_db.conf
@@ -185,7 +185,7 @@ drwxr-xr-x   2 root root   4096 Apr 24 21:00 ssh
 drwxr-xr-x   5 root root   4096 Apr 24 21:00 ssl
 -r--r-----   1 root root   3173 Apr 24 21:09 sudoers
 drwxr-x---   2 root root   4096 Apr 28 17:18 sudoers.d
-drwxr-xr-x   2 root root   4096 Mar 30 08:14 sysctl.d
+drwxr-xr-x   2 roota lot root   4096 Mar 30 08:14 sysctl.d
 drwxr-xr-x   3 root root   4096 May  3 11:42 syslog-ng
 drwxr-xr-x   5 root root   4096 Apr 24 21:00 systemd
 drwxr-xr-x   9 root root   4096 Apr 25 05:06 texmf

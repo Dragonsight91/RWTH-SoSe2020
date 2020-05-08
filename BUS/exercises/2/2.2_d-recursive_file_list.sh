@@ -1,5 +1,4 @@
 #!/bin/bash
-ROOT=""
 function list_dirs() {
     DIRLIST=$(find $1 -maxdepth 1 -type d) # get all subdirectories. 
     FLIST=$(find $1 -maxdepth 1 -type f)   # get all files in directory
@@ -19,8 +18,8 @@ function list_dirs() {
         else
 
             # if we are in the root directory, we can print that, otherwise we don't care
-            if [[ $i == $ROOT ]]; then
-                printf "\n%${2}s\e[1m\e[4m\e[38;5;6mDIRECTORY:\e[0m $(echo $ROOT | sed 's_^.^/\b__') \n"
+            if [[ $i == $PWD ]] | [[ $i == "." ]]; then
+                printf "\n%${2}s\e[1m\e[4m\e[38;5;6mDIRECTORY:\e[0m $(echo $PWD | sed 's_^.^/\b__') \n"
             fi
             # list all files in directory
             for j in $FLIST; do
@@ -35,9 +34,7 @@ function list_dirs() {
 }
 
 if [[ -z $1 ]]; then
-    ROOT="${PWD}/"
-    list_dirs $ROOT 0
+    list_dirs $PWD 0
 else
-    ROOT=$(echo $1 | sed "s_^._${PWD}_1") # always use absolute paths
-    list_dirs $ROOT 0
+    list_dirs $1 0
 fi

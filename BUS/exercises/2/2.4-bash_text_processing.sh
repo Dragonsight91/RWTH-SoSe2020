@@ -8,8 +8,8 @@ ls -sh | grep -ve "^[total]"
 
 # 2.4 b)
 # for ls and grep, see 2.4 a)
-# awk '{ t = $1; $1 = $2; $2 = t; print; }' -> switch columns
-ls -sh | grep -ve "^[total]" | awk '{ t = $1; $1 = $2; $2 = t; print; }'
+# awk '{ print $2, $1; }' -> switch columns
+ls -sh | grep -ve "^[total]" | awk '{ print $2, $1; }'
 
 # 2.4 c)
 # GROUP=1 echo $() -> provide a variable to the command, set it to value 1-4 to get groupings of 1-3 people or the nullgroup
@@ -22,5 +22,5 @@ GROUP=1 echo $(sort teamnamen.txt | uniq -c | awk '{print $1}' | sort -n | uniq 
 # sort teamnamen.txt | uniq -c -> initial setup, get all the teamnames grouped together, including empty
 # awk '{print $1}' | sort -n  | uniq -c -> get the amount of groups of size n and empty
 # awk '{if ($2!="1" && $2!="2" && $2!="3") print "\n"$2, "Nullgroup"; else print $1, $2}' -> formatting & pretty printing
-sort teamnamen.txt | uniq -c | awk '{print $1}' | sort -n | uniq -c | awk '{if ($2!="1" && $2!="2" && $2!="3") print "\n"$2, "Nullgroup"; else print $1, $2}'
+               sort teamnamen.txt | uniq -c | awk '{print $1}' | sort -n | uniq -c | awk '{if ($2!="1" && $2!="2" && $2!="3") print "\n"$2, "Nullgroup"; else print $1, $2}'
 
