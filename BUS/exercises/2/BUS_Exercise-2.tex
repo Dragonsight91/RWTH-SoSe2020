@@ -2,6 +2,12 @@
 \documentclass[a4paper, 11pt]{article}
 \usepackage[margin=.9in]{geometry}
 \usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[english]{babel}
+\hfuzz=20pt
+\vfuzz=20pt
+\hbadness=2000
+\vbadness=\maxdimen
 
 % extra packages
 \usepackage{hyperref}
@@ -65,7 +71,8 @@
               \texttt{2.1-stack\_exercise.c} is Exercise 2, section 1.
         \item Every Solution \textbf{WILL} be in this pdf, but not necessarily 
               anything predefined by the exercise.
-        \item Any explanation will be both in this PDF as well as in each file.
+        \item Any explanation will be both in this PDF as well as in each code file, 
+              provided by comments.
         \item This explanation will be in each PDF, in case someone who doesn't
               know the format tries to correct the exercises
     \end{itemize}
@@ -93,11 +100,10 @@
         \item The stack is empty, making the \texttt{root pointer} point to \lstinline{NULL}
         \item There is at least one item on the stack, making the \texttt{root pointer} point to the last item.
     \end{itemize}
-    Therefore we first have to test wether \texttt{root} points to \lstinline{NULL}.
-    \\
+    Therefore we first have to test wether \texttt{root} points to \lstinline{NULL}. 
     In the first case, we only have to dereference the \texttt{root pointer} and point it to a newly created 
     \texttt{StackNode}, due to the way \texttt{StackNode} is defined.
-    \\\\
+    \\
     The second case has some more actions, but it's not much more complicated. Here are the steps:
     \begin{enumerate}
         \item create a new \texttt{StackNode} and call it \texttt{temp}
@@ -122,6 +128,7 @@ void push(StackNode **pointer2root, char *command)
   }
 }
     \end{lstlisting}
+
     % pop function subsection
     \subsection{b -The \texttt{pop()} Function}
     The \texttt{pop} function pops an element from the top of the stack and makes its data (in our case a \texttt{string}) 
@@ -333,21 +340,19 @@ fi
     \lstinline+ls -sh | grep -ve "^[total]" | awk '{ print $2, $1; }'+
 
     \subsection{c - Processing Text File and Groupings}
-    As i didn't read the exercise properly, i assumed that i could just list all things in a nice format and be done. 
-    I then \textit{quickly} realized that that was actually the next exercise... So i just modified the command from the next subsection.\\
+    As i didn't read the exercise properly, i assumed that i could just list all things in a nice format and be done.
+    I then \textit{quickly} realized that that was actually the next exercise... So i just modified the command from the next subsection.
     Getting to the actual command, i used \lstinline{sort teamnamen.txt} to first get a sorted list, because i then piped it 
     into \lstinline{uniq -c}, which gives a counted list of unique elements. After that, it is piped into \lstinline+awk {print $1}'+, 
     to strip the group names, then numerically sorted with \lstinline{sort -n}, only to be piped into \lstinline{uniq -c} again, so we can get a nicer output.
     The Command also uses a temporary variable \lstinline{GROUP}, so one can change the output. The last part then gets piped into 
     \lstinline{head -n $GROUP} and then to \lstinline{tail -n 1} so it only gives us the line we want. \texttt{GROUP} can change that output to be either a group 
-    of 1-3 people, or the nullgroup. And this is said monstrosity:
-    \\\\
+    of 1-3 people, or the nullgroup. And this is said monstrosity:\\
     \lstinline+GROUP=1 echo $(sort teamnamen.txt | uniq -c | awk '{print $1}' | sort -n | uniq -c | head -n $GROUP | tail -n 1)+ 
 
     \subsection{d - More Text Processing and grouping}
     Since i already explained everything up to the last \texttt{awk} command in the previous, i will not explain it again.
-    The Last command, without \texttt{echo}, \texttt{head} and \texttt{tail} is piped into awk to pretty print the output, making it into the following monstrosity:
-    \\\\
+    The Last command, without \texttt{echo}, \texttt{head} and \texttt{tail} is piped into awk to pretty print the output, making it into the following monstrosity:\\
     \lstinline+sort teamnamen.txt | uniq -c | awk '{print $1}' | sort -n | uniq -c | awk '{if ($2!="1" && $2!="2" && $2!="3") print "\n"$2, "Nullgroup"; else print $1, $2}'+
 
 \end{document}
