@@ -13,36 +13,37 @@
 \definecolor{commentsColor}{rgb}{0.497495, 0.497587, 0.497464}
 \definecolor{keywordsColor}{rgb}{0.000000, 0.000000, 0.635294}
 \definecolor{stringColor}{rgb}{0.558215, 0.000000, 0.135316}
-\lstset{ %
-  backgroundcolor=\color{white},   % choose the background color; you must add \usepackage{color} or \usepackage{xcolor}
-  basicstyle=\footnotesize,        % the size of the fonts that are used for the code
-  breakatwhitespace=false,         % sets if automatic breaks should only happen at whitespace
-  breaklines=true,                 % sets automatic line breaking
-  captionpos=b,                    % sets the caption-position to bottom
-  commentstyle=\color{commentsColor}\textit,    % comment style
-  deletekeywords={...},            % if you want to delete keywords from the given language
-  escapeinside={\%*}{*)},          % if you want to add LaTeX within your code
-  extendedchars=true,              % lets you use non-ASCII characters; for 8-bits encodings only, does not work with UTF-8
-  frame=tb,	                   	   % adds a frame around the code
-  keepspaces=true,                 % keeps spaces in text, useful for keeping indentation of code (possibly needs columns=flexible)
-  keywordstyle=\color{keywordsColor}\bfseries,       % keyword style
-  otherkeywords={*,...},           % if you want to add more keywords to the set
-  numbers=left,                    % where to put the line-numbers; possible values are (none, left, right)
-  numbersep=5pt,                   % how far the line-numbers are from the code
-  numberstyle=\tiny\color{commentsColor}, % the style that is used for the line-numbers
-  rulecolor=\color{black},         % if not set, the frame-color may be changed on line-breaks within not-black text (e.g. comments (green here))
-  showspaces=false,                % show spaces everywhere adding particular underscores; it overrides 'showstringspaces'
-  showstringspaces=false,          % underline spaces within strings only
-  showtabs=false,                  % show tabs within strings adding particular underscores
-  stepnumber=1,                    % the step between two line-numbers. If it's 1, each line will be numbered
-  stringstyle=\color{stringColor}, % string literal style
-  tabsize=2,	                     % sets default tabsize to 2 spaces
-  title=\lstname,                  % show the filename of files included with \lstinputlisting; also try caption instead of title
-  columns=fixed                    % Using fixed column width (for e.g. nice alignment)
+\lstset{
+  backgroundcolor=\color{white},                        % choose the background color; you must add \usepackage{color} or \usepackage{xcolor}
+  basicstyle=\footnotesize,                             % the size of the fonts that are used for the code
+  breakatwhitespace=false,                              % sets if automatic breaks should only happen at whitespace
+  breaklines=true,                                      % sets automatic line breaking
+  captionpos=b,                                         % sets the caption-position to bottom
+  commentstyle=\color{commentsColor}\textit,            % comment style
+  deletekeywords={},                                    % if you want to delete keywords from the given language
+  escapeinside={\%*}{*)},                               % if you want to add LaTeX within your code
+  extendedchars=true,                                   % lets you use non-ASCII characters; for 8-bits encodings only, does not work with UTF-8
+  frame=tb,	                   	                        % adds a frame around the code
+  keepspaces=true,                                      % keeps spaces in text, useful for keeping indentation of code (possibly needs columns=flexible)
+  keywordstyle=\color{keywordsColor}\bfseries,          % keyword style
+  otherkeywords={True,False,true,false,null,None,NULL}, % if you want to add more keywords to the set
+  numbers=left,                                         % where to put the line-numbers; possible values are (none, left, right)
+  numbersep=5pt,                                        % how far the line-numbers are from the code
+  numberstyle=\tiny\color{commentsColor},               % the style that is used for the line-numbers
+  rulecolor=\color{black},                              % if not set, the frame-color may be changed on line-breaks within not-black text (e.g. comments (green here))
+  showspaces=false,                                     % show spaces everywhere adding particular underscores; it overrides 'showstringspaces'
+  showstringspaces=false,                               % underline spaces within strings only
+  showtabs=false,                                       % show tabs within strings adding particular underscores
+  stepnumber=1,                                         % the step between two line-numbers. If it's 1, each line will be numbered
+  stringstyle=\color{stringColor},                      % string literal style
+  tabsize=2,	                                          % sets default tabsize to 2 spaces
+  title=\lstname,                                       % show the filename of files included with \lstinputlisting; also try caption instead of title
+  columns=fixed                                        % Using fixed column width (for e.g. nice alignment)
 }
 
 \author{Thilo Metzlaff\\406247 \and Mats Frenk\\393702\and René van Emelen\\406008}
-\title{BUS Exercise 2}
+\title{BUS Exercise 2 \\ \Large Group 23}
+
 \begin{document}
     % titlepage
     \maketitle
@@ -60,7 +61,6 @@
 
     \subsection*{THE FORMAT}
     \begin{itemize}
-        \item All files will be inside of an \texttt{exercise.zip}
         \item Every file will be named similar to the sections in here, so\\
               \texttt{2.1-stack\_exercise.c} is Exercise 2, section 1.
         \item Every Solution \textbf{WILL} be in this pdf, but not necessarily 
@@ -76,9 +76,9 @@
     To create a stack, one needs three things:
     \begin{itemize}
         \item A root node, which is a pointer to the last element added
-              to the stack or \texttt{NULL}, if the stack is empty.
+              to the stack or \lstinline{NULL}, if the stack is empty.
         \item A \texttt{StackNode}, which has content and a pointer to the previously 
-              added node, or \texttt{NULL}, if it's the last element
+              added node, or \lstinline{NULL}, if it's the last element
         \item Data for the \texttt{StackNode} to point to.
     \end{itemize}
     Since the Exercise already predefined the Structure and creation of the \texttt{StackNode}, 
@@ -86,14 +86,14 @@
     \texttt{pop} functions
 
     % push function subsection
-    \subsection{The \texttt{push()} Function}
+    \subsection{a - The \texttt{push()} Function}
     The \texttt{push} function takes an element and pushes it onto the stack.
     Pushing to a stack has 2 cases we have to handle:
     \begin{itemize}
-        \item The stack is empty, making the \texttt{root pointer} point to \texttt{NULL}
+        \item The stack is empty, making the \texttt{root pointer} point to \lstinline{NULL}
         \item There is at least one item on the stack, making the \texttt{root pointer} point to the last item.
     \end{itemize}
-    Therefore we first have to test wether \texttt{root} points to \texttt{NULL}.
+    Therefore we first have to test wether \texttt{root} points to \lstinline{NULL}.
     \\
     In the first case, we only have to dereference the \texttt{root pointer} and point it to a newly created 
     \texttt{StackNode}, due to the way \texttt{StackNode} is defined.
@@ -123,17 +123,17 @@ void push(StackNode **pointer2root, char *command)
 }
     \end{lstlisting}
     % pop function subsection
-    \subsection{The \texttt{pop()} Function}
+    \subsection{b -The \texttt{pop()} Function}
     The \texttt{pop} function pops an element from the top of the stack and makes its data (in our case a \texttt{string}) 
     available to the program. When trying to pop off an element we can encounter two cases:
     \begin{itemize}
       \item The stack is empty
       \item The stack has at least one element
     \end{itemize}
-    In the first case, we can return \texttt{\color{blue}{false}}. If we do have an element, we have to do the following, 
-    before returning \texttt{\color{blue}{true}}:
+    In the first case, we can return \lstinline{false}. If we do have an element, we have to do the following, 
+    before returning \lstinline{true}:
     \begin{enumerate}
-      \item get the last node from the stack\\
+      \item get the last node from the stack \\
             \lstinline{StackNode *temp = *pointer2root;}
       \item get the next node and point to it in \texttt{root} \\
             \lstinline{*pointer2command = temp->command;}
@@ -169,7 +169,7 @@ bool pop(StackNode **pointer2root, char **pointer2command)
     %subsection exercise a
     \subsection{a - Replacing the first Occurence of a Character}
     To replace things, we can simply use \texttt{sed}. Here we need to replace the first \texttt{1} 
-    with a \texttt{2}. the Regex for this is \lstinline{'s_1_2_1'}. \\
+    with a \texttt{2}. the Regex for this is \lstset{language=Bash}\lstinline{'s_1_2_1'}.\\
     To do this easily, we can create a script file, which takes a string as its argument and pipes 
     it into \texttt{sed}, like this:
     \begin{lstlisting}[language=Bash]
@@ -333,19 +333,21 @@ fi
     \lstinline+ls -sh | grep -ve "^[total]" | awk '{ print $2, $1; }'+
 
     \subsection{c - Processing Text File and Groupings}
-    As i didn't read the exercise properly, i assumed that i could just list all things in a nice format and be done, 
-    but i realized that that was actually the next exercise... So i just modified the command from the next subsection.\\
+    As i didn't read the exercise properly, i assumed that i could just list all things in a nice format and be done. 
+    I then \textit{quickly} realized that that was actually the next exercise... So i just modified the command from the next subsection.\\
     Getting to the actual command, i used \lstinline{sort teamnamen.txt} to first get a sorted list, because i then piped it 
     into \lstinline{uniq -c}, which gives a counted list of unique elements. After that, it is piped into \lstinline+awk {print $1}'+, 
     to strip the group names, then numerically sorted with \lstinline{sort -n}, only to be piped into \lstinline{uniq -c} again, so we can get a nicer output.
     The Command also uses a temporary variable \lstinline{GROUP}, so one can change the output. The last part then gets piped into 
     \lstinline{head -n $GROUP} and then to \lstinline{tail -n 1} so it only gives us the line we want. \texttt{GROUP} can change that output to be either a group 
-    of 1-3 people, or the nullgroup. And this is said monstrosity:\\\\
+    of 1-3 people, or the nullgroup. And this is said monstrosity:
+    \\\\
     \lstinline+GROUP=1 echo $(sort teamnamen.txt | uniq -c | awk '{print $1}' | sort -n | uniq -c | head -n $GROUP | tail -n 1)+ 
 
     \subsection{d - More Text Processing and grouping}
     Since i already explained everything up to the last \texttt{awk} command in the previous, i will not explain it again.
-    The Last command, without \texttt{echo}, \texttt{head} and \texttt{tail} is piped into awk to pretty print the output, making it into the following monstrosity:\\\\
+    The Last command, without \texttt{echo}, \texttt{head} and \texttt{tail} is piped into awk to pretty print the output, making it into the following monstrosity:
+    \\\\
     \lstinline+sort teamnamen.txt | uniq -c | awk '{print $1}' | sort -n | uniq -c | awk '{if ($2!="1" && $2!="2" && $2!="3") print "\n"$2, "Nullgroup"; else print $1, $2}'+
 
 \end{document}
