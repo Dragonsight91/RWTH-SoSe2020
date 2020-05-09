@@ -14,6 +14,9 @@
 \usepackage{mathtools}
 \usepackage{microtype}
 \usepackage{stmaryrd}
+\usepackage{tikz}
+\usetikzlibrary{arrows,automata,positioning}
+
 
 % special math symbols
 \newcommand{\R}{\ensuremath{\mathbb{R}}}
@@ -54,7 +57,7 @@
 }
 
 \author{Thilo Metzlaff\\406247 \and Mats Frenk\\393702\and René van Emelen\\406008}
-\title{BUS Exercise 2 \\ Group 23}
+\title{FoSAP Exercise 4 \\ \large Group 3}
 \begin{document}
     % titlepage
     \maketitle
@@ -81,4 +84,35 @@
               know the format tries to correct the exercises
     \end{itemize}
     \newpage
+    \begin{figure}[h]
+      \centering
+      \begin{tikzpicture}[->,>=stealth',shorten >=1pt,auto,node distance=3.5cm,
+            scale = 1,transform shape]
+      
+            \node[state,initial] (q_0) {$q_0$};
+            \node[state,accepting] (q_1) [below right of=q_0] {$q_1$};
+            \node[state,accepting] (q_2) [below left of=q_0] {$q_2$};
+            \node[state,accepting] (q_3) [above right of=q_0] {$q_3$};
+            \node[state,accepting] (q_4) [above left of=q_0] {$q_4$};
+      
+      
+            \path (q_0) edge              node {$1$} (q_1)
+                  (q_0) edge              node {$2$} (q_2)
+                  (q_0) edge              node {$3$} (q_3)
+                  (q_0) edge              node {$4$} (q_4)
+      
+                  (q_1) edge [bend left]  node {$4$} (q_2)
+                  (q_2) edge [bend left]  node {$4$} (q_4)
+                  (q_3) edge [bend left]  node {$4$} (q_1)
+                  (q_4) edge [bend left]  node {$4$} (q_3)
+      
+                  (q_4) edge              node {$2$} (q_2)
+                  (q_2) edge              node {$3$} (q_1)
+                  (q_3) edge              node {$4$} (q_4)
+                  (q_1) edge              node {$6$} (q_3)
+                  ;
+      
+         \end{tikzpicture}
+         \caption[sd]{Test}
+    \end{figure}
 \end{document}

@@ -60,8 +60,8 @@
     \newpage
 
     % section 0
-    \section{Introduction}
-    Welcome To this special endeavour, where i write every single thing in \LaTeX{}
+    \section*{Introduction}
+    Welcome to this special endeavour, where I write every single thing in \LaTeX{}
     How is any of this gonna work?\\
     Simple: With patience and a format definition. Therefore, please let me define the format of this.
 
@@ -74,7 +74,7 @@
         \item Any explanation will be both in this PDF as well as in each code file, 
               provided by comments.
         \item This explanation will be in each PDF, in case someone who doesn't
-              know the format tries to correct the exercises
+              know the format tries to correct the exercises.
     \end{itemize}
     \newpage
 
@@ -104,7 +104,7 @@
     In the first case, we only have to dereference the \texttt{root pointer} and point it to a newly created 
     \texttt{StackNode}, due to the way \texttt{StackNode} is defined.
     \\
-    The second case has some more actions, but it's not much more complicated. Here are the steps:
+    The second case has some more actions, but it's not a lot more complicated. Here are the steps:
     \begin{enumerate}
         \item create a new \texttt{StackNode} and call it \texttt{temp}
         \item point the \texttt{next\_node} pointer of the \texttt{temp StackNode} to the 
@@ -340,9 +340,9 @@ fi
     \lstinline+ls -sh | grep -ve "^[total]" | awk '{ print $2, $1; }'+
 
     \subsection{c - Processing Text File and Groupings}
-    As i didn't read the exercise properly, i assumed that i could just list all things in a nice format and be done.
-    I then \textit{quickly} realized that that was actually the next exercise... So i just modified the command from the next subsection.
-    Getting to the actual command, i used \lstinline{sort teamnamen.txt} to first get a sorted list, because i then piped it 
+    As I didn't read the exercise properly, I assumed that I could just list all things in a nice format and be done.
+    I then \textit{quickly} realized that this was actually the next exercise... So I just modified the command from the next subsection.
+    Getting to the actual command, I used \lstinline{sort teamnamen.txt} to first get a sorted list, because I then piped it 
     into \lstinline{uniq -c}, which gives a counted list of unique elements. After that, it is piped into \lstinline+awk {print $1}'+, 
     to strip the group names, then numerically sorted with \lstinline{sort -n}, only to be piped into \lstinline{uniq -c} again, so we can get a nicer output.
     The Command also uses a temporary variable \lstinline{GROUP}, so one can change the output. The last part then gets piped into 
