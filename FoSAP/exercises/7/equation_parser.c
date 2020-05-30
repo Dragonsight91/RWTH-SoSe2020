@@ -3,9 +3,10 @@
 #include <stdlib.h>
 #include <string.h>
 #include <sys/wait.h>
+#include <fcntl.h>
 
 // debug mode
-#define DEBUG 1
+#define DEBUG 0
 
 //  Parser Symbol definitions
 
@@ -81,19 +82,19 @@ void parser(struct node *curr, char *eq, int len)
     if (opIdx != -1)
     {
         // set te length of the partitions
-        int lenA = opIdx+1;
+        int lenA = opIdx + 1;
         int lenB = len - opIdx;
 
         // create the partitions
         char *partitionA = malloc(lenA); // partition a goes up to the operator's index
         char *partitionB = malloc(lenB); // partition b starts after the operator's index
 
-        *(partitionA + lenA) = '\0';
-        *(partitionB + lenB) = '\0';
+        *(partitionA + lenA - 1) = '\0';
+        *(partitionB + lenB - 1) = '\0';
 
         // copy the data over. this adds space complexity, but keeps it easier to read
-        strncpy(partitionA, eq, lenA-1);
-        strncpy(partitionB, eq+opIdx+1, lenB-1);
+        strncpy(partitionA, eq, lenA - 1);
+        strncpy(partitionB, eq + opIdx + 1, lenB - 1);
 
         // print the partitions to stdout. DEBUG ONLY!!!
         if (DEBUG)
@@ -106,11 +107,11 @@ void parser(struct node *curr, char *eq, int len)
         // assign the operator
         struct node *a = newNode();
         struct node *b = newNode();
-    
-        parser(a, partitionA, lenA-1);
+
+        parser(a, partitionA, lenA - 1);
         free(partitionA);
 
-        parser(b, partitionB, lenB-1);
+        parser(b, partitionB, lenB - 1);
         free(partitionB);
 
         curr->data = *(eq + opIdx);
@@ -121,22 +122,26 @@ void parser(struct node *curr, char *eq, int len)
     }
     else
     {
-        printf("Expression: %s\n", eq);
-        printf("no operator\n");
-        printf("BOOL: %c\n", *(eq + len-1));
-
+        if (DEBUG)
+        {
+            printf("Expression: %s\n", eq);
+            printf("no operator\n");
+            printf("BOOL: %c\n", *(eq + len - 1));
+        }
         // (~1)\0
-        if ((*eq == '(') & (*(eq + len-1) == ')'))
+        if ((*eq == '(') & (*(eq + len - 1) == ')'))
         {
             printf("this is fenced\n");
             // remove fencing
-            char* temp = malloc(len-1);
-            *(temp + len-1) = '\0';
-            strncpy(temp, eq+1, len-2);
+            int newLen = len - 1;
+            char *temp = malloc(len);
+            *(temp + newLen - 1) = '\0';
+            strncpy(temp, eq + 1, newLen - 1);
 
-            printf("unfenced eq: %s\n", temp);
+            if (DEBUG)
+                printf("unfenced eq: %s\n", temp);
             // try again
-            parser(curr, temp, len-2);
+            parser(curr, temp, newLen - 1);
             free(temp);
             return;
         }
@@ -144,21 +149,22 @@ void parser(struct node *curr, char *eq, int len)
         {
             printf("negated");
             struct node *leaf = newNode();
-            int newlen = len - 1;
+            int newlen = len;
             char *newstr = malloc(newlen);
+            *(newstr + newlen - 1) = '\0';
 
             strncpy(newstr, eq + 1, newlen);
 
             curr->data = '~';
             curr->left = leaf;
-            parser(leaf, newstr, newlen);
+            parser(leaf, newstr, newlen - 1);
             free(newstr);
             return;
         }
         else
         {
             printf("Error while parsing.");
-            return;
+            exit(EXIT_FAILURE);
         }
     }
 }
@@ -174,15 +180,40 @@ void eqBuilder(char **out, struct node **curr)
 
 int main(void)
 {
-    FILE* fh = fopen("boolsche-ausdruecke", "r");
+    FILE *fd = fopen("boolsche-ausdruecke", "r");
+    long int fsize;
+
+    // get file size
+    fseek(fd, 0, SEEK_END);
+    fsize = ftell(fd);
+    fseek(fd, 0, SEEK_SET);
+
+    // create a buffer of filesize+200. just in case we overflow with a \0
+    // this will be shrunken down later.
+    char *buf = malloc(fsize+200);
+    memset(buf, '\0', fsize+200);
+
+    // in our case, we want the last line. 
+    // we can assume that this line is the longest for our case, so overwriting the buffer is fine.
+    // this shouldn't be used, but it's the 2AM quick 'n dirty hotfix
+    char *ptr;
+    while ((ptr = fgets(buf, fsize, fd)) != NULL)
+    {
+        if(ptr != NULL)
+            memset(buf, '\0', fsize); // over
+    }
+
+    // get size and reallocate memory to the correct size. we should only use what we need.
+    // we can assume null termination, because we filled the memory with \0. it is impossible to exceed that
+    // because any subset of characters is at most our max size
+    int len = strlen(buf);
+    buf = realloc(buf, len+1); 
+
+    char *str = "(~1&~~0|1|0&~0&0|0&1&1|~0&(0))&((~(~0)|0&0|1&0|1))|0&1&(~1&~~0|1|0&~0&0|0&1&1|~0&(0))&((~(~0)|0&0|1&0|1))|0&1&(~((~(1|~((1))&1&(0))))|(1))|~0&(~0|0|~0|1&1)&(~0&1|0)&0|1&0|1&0&(~1|~1&~1&0)|~0|0|1&0|0|(~(1)&((0|1|~~0|0|(1)&(1&(0)))))&(~((~(1|~((1))&1&(0))))|(1))|~0&(~0|0|~0|1&1)&(~0&1|0)&0|1&0|1&0&(~1|~1&~1&0)|~0|0|1&0|0|(~(1)&((0|1|~~0|0|(1)&(1&(0)))))&(~1&~~0|1|0&~0&0|0&1&1|~0&(0))&((~(~0)|0&0|1&0|1))|0&1&(~((~(1|~((1))&1&(0))))|(1))|~0&(~0|0|~0|1&1)&(~0&1|0)&0|1&0|1&0&(~1|~1&~1&0)|~0|0|1&0|0|(~(1)&((0|1|~~0|0|(1)&(1&(0)))))&(~1&~~0|1|0&~0&0|0&1&1|~0&(0))&((~(~0)|0&0|1&0|1))|0&1&(~((~(1|~((1))&1&(0))))|(1))|~0&(~0|0|~0|1&1)&(~0&1|0)&0|1&0|1&0&(~1|~1&~1&0)|~0|0|1&0|0|(~(1)&((0|1|~~0|0|(1)&(1&(0)))))&(~1&~~0|1|0&~0&0|0&1&1|~0&(0))&((~(~0)|0&0|1&0|1))|0&1&(~((~(1|~((1))&1&(0))))|(1))|~0&(~0|0|~0|1&1)&(~0&1|0)&0|1&0|1&0&(~1|~1&~1&0)|~0|0|1&0|0|(~(1)&((0|1|~~0|0|(1)&(1&(0)))))&(~1&~~0|1|0&~0&0|0&1&1|~0&(0))&((~(~0)|0&0|1&0|1))|0&1&(~((~(1|~((1))&1&(0))))|(1))|~0&(~0|0|~0|1&1)&(~0&1|0)&0|1&0|1&0&(~1|~1&~1&0)|~0|0|1&0|0|(~(1)&((0|1|~~0|0|(1)&(1&(0)))))&(~1&~~0|1|0&~0&0|0&1&1|~0&(0))&((~(~0)|0&0|1&0|1))|0&1&(~((~(1|~((1))&1&(0))))|(1))|~0&(~0|0|~0|1&1)&(~0&1|0)&0|1&0|1&0&(~1|~1&~1&0)|~0|0|1&0|0|(~(1)&((0|1|~~0|0|(1)&(1&(0)))))&(~1&~~0|1|0&~0&0|0&1&1|~0&(0))&((~(~0)|0&0|1&0|1))|0&1&(~((~(1|~((1))&1&(0))))|(1))|~0&(~0|0|~0|1&1)&(~0&1|0)&0|1&0|1&0&(~1|~1&~1&0)|~0|0|1&0|0|(~(1)&((0|1|~~0|0|(1)&(1&(0)))))&(~1&~~0|1|0&~0&0|0&1&1|~0&(0))&((~(~0)|0&0|1&0|1))|0&1&(~((~(1|~((1))&1&(0))))|(1))|~0&(~0|0|~0|1&1)&(~0&1|0)&0|1&0|1&0&(~1|~1&~1&0)|~0|0|1&0|0|(~(1)&((0|1|~~0|0|(1)&(1&(0)))))&(~1&~~0|1|0&~0&0|0&1&1|~0&(0))&((~(~0)|0&0|1&0|1))|0&1&(~((~(1|~((1))&1&(0))))|(1))|~0&(~0|0|~0|1&1)&(~0&1|0)&0|1&0|1&0&(~1|~1&~1&0)|~0|0|1&0|0|(~(1)&((0|1|~~0|0|(1)&(1&(0)))))&(~1&~~0|1|0&~0&0|0&1&1|~0&(0))&((~(~0)|0&0|1&0|1))|0&1&(~((~(1|~((1))&1&(0))))|(1))|~0&(~0|0|~0|1&1)&(~0&1|0)&0|1&0|1&0&(~1|~1&~1&0)|~0|0|1&0|0|(~(1)&((0|1|~~0|0|(1)&(1&(0)))))&(~1&~~0|1|0&~0&0|0&1&1|~0&(0))&((~(~0)|0&0|1&0|1))|0&1&(~((~(1|~((1))&1&(0))))|(1))|~0&(~0|0|~0|1&1)&(~0&1|0)&0|1&0|1&0&(~1|~1&~1&0)|~0|0|1&0|0|(~(1)&((0|1|~~0|0|(1)&(1&(0)))))";
+    // create a new node
     struct node *root = newNode();
-    char *test = "(~1&~~0|1|0&~0&0|0&1&1|~0&(0))&((~(~0)|0&0|1&0|1))|0&1&(~((~(1|~((1))&1&(0))))|(1))|~0&(~0|0|~0|1&1)&(~0&1|0)&0|1&0|1&0&(~1|~1&~1&0)|~0|0|1&0|0|(~(1)&((0|1|~~0|0|(1)&(1&(0)))))&(~1&~~0|1|0&~0&0|0&1&1|~0&(0))&((~(~0)|0&0|1&0|1))|0&1&(~((~(1|~((1))&1&(0))))|(1))|~0&(~0|0|~0|1&1)&(~0&1|0)&0|1&0|1&0&(~1|~1&~1&0)|~0|0|1&0|0|(~(1)&((0|1|~~0|0|(1)&(1&(0)))))&(~1&~~0|1|0&~0&0|0&1&1|~0&(0))&((~(~0)|0&0|1&0|1))|0&1&(~((~(1|~((1))&1&(0))))|(1))|~0&(~0|0|~0|1&1)&(~0&1|0)&0|1&0|1&0&(~1|~1&~1&0)|~0|0|1&0|0|(~(1)&((0|1|~~0|0|(1)&(1&(0)))))&(~1&~~0|1|0&~0&0|0&1&1|~0&(0))&((~(~0)|0&0|1&0|1))|0&1&(~((~(1|~((1))&1&(0))))|(1))|~0&(~0|0|~0|1&1)&(~0&1|0)&0|1&0|1&0&(~1|~1&~1&0)|~0|0|1&0|0|(~(1)&((0|1|~~0|0|(1)&(1&(0)))))&(~1&~~0|1|0&~0&0|0&1&1|~0&(0))&((~(~0)|0&0|1&0|1))|0&1&(~((~(1|~((1))&1&(0))))|(1))|~0&(~0|0|~0|1&1)&(~0&1|0)&0|1&0|1&0&(~1|~1&~1&0)|~0|0|1&0|0|(~(1)&((0|1|~~0|0|(1)&(1&(0)))))&(~1&~~0|1|0&~0&0|0&1&1|~0&(0))&((~(~0)|0&0|1&0|1))|0&1&(~((~(1|~((1))&1&(0))))|(1))|~0&(~0|0|~0|1&1)&(~0&1|0)&0|1&0|1&0&(~1|~1&~1&0)|~0|0|1&0|0|(~(1)&((0|1|~~0|0|(1)&(1&(0)))))&(~1&~~0|1|0&~0&0|0&1&1|~0&(0))&((~(~0)|0&0|1&0|1))|0&1&(~((~(1|~((1))&1&(0))))|(1))|~0&(~0|0|~0|1&1)&(~0&1|0)&0|1&0|1&0&(~1|~1&~1&0)|~0|0|1&0|0|(~(1)&((0|1|~~0|0|(1)&(1&(0)))))&(~1&~~0|1|0&~0&0|0&1&1|~0&(0))&((~(~0)|0&0|1&0|1))|0&1&(~((~(1|~((1))&1&(0))))|(1))|~0&(~0|0|~0|1&1)&(~0&1|0)&0|1&0|1&0&(~1|~1&~1&0)|~0|0|1&0|0|(~(1)&((0|1|~~0|0|(1)&(1&(0)))))&(~1&~~0|1|0&~0&0|0&1&1|~0&(0))&((~(~0)|0&0|1&0|1))|0&1&(~((~(1|~((1))&1&(0))))|(1))|~0&(~0|0|~0|1&1)&(~0&1|0)&0|1&0|1&0&(~1|~1&~1&0)|~0|0|1&0|0|(~(1)&((0|1|~~0|0|(1)&(1&(0)))))&(~1&~~0|1|0&~0&0|0&1&1|~0&(0))&((~(~0)|0&0|1&0|1))|0&1&(~((~(1|~((1))&1&(0))))|(1))|~0&(~0|0|~0|1&1)&(~0&1|0)&0|1&0|1&0&(~1|~1&~1&0)|~0|0|1&0|0|(~(1)&((0|1|~~0|0|(1)&(1&(0)))))&(~1&~~0|1|0&~0&0|0&1&1|~0&(0))&((~(~0)|0&0|1&0|1))|0&1&(~((~(1|~((1))&1&(0))))|(1))|~0&(~0|0|~0|1&1)&(~0&1|0)&0|1&0|1&0&(~1|~1&~1&0)|~0|0|1&0|0|(~(1)&((0|1|~~0|0|(1)&(1&(0)))))&(~1&~~0|1|0&~0&0|0&1&1|~0&(0))&((~(~0)|0&0|1&0|1))|0&1&(~((~(1|~((1))&1&(0))))|(1))|~0&(~0|0|~0|1&1)&(~0&1|0)&0|1&0|1&0&(~1|~1&~1&0)|~0|0|1&0|0|(~(1)&((0|1|~~0|0|(1)&(1&(0)))))";
-    int len = strlen(test);
-    
 
-    printf("Expression: %s\n\n", test);
-
-    parser(root, test, len);
-    printf("\nWord Length: %d\n", len);
+    parser(root, str, strlen(str));
+    printf("\nWord Length: %d\n", (int) strlen(str));
     return 0;
 }
