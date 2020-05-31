@@ -2,13 +2,14 @@
 #include <unistd.h>
 #include <stdlib.h>
 #include <string.h>
-#include <sys/wait.h>
-#include <fcntl.h>
+#include <time.h>
+#include <stdarg.h>
 
 // debug mode
 #define DEBUG 0
 
-//  Parser Symbol definitions
+// Parser Symbol definitions
+// these keep the program modular and expandable
 
 // basic operators
 #define NOT '~'
@@ -20,7 +21,10 @@
 #define IMP '@'
 #define EQI '='
 
-//struct definitions
+// struct definitions
+// any expression is like a bool tree, so let's generate one.
+// this makes the program output reversible.
+// expression -> tree; tree -> expression
 struct node
 {
     char data;
@@ -41,16 +45,20 @@ struct node *newNode()
     return node;
 }
 
-void parser(struct node *curr, char *eq, int len)
+// parse the expression and create
+void parser(struct node *curr, char *eq, int len, int startpos)
 {
-    printf("\nlength: %d\n", len);
+    // The expression is empty. The only case when that happens is a double operator
     if (len == 0)
-        return;
+    {
+        printf("[\e[91mERR\e[0m] Empty Expression Error at: \e[35m%d\e[0m\n", startpos);
+        exit(0);
+    }
 
     if (len == 1)
     {
         curr->data = *eq;
-        printf("Symbol: %c\n", *eq);
+        //printf("Symbol: %c\n", *eq);
         return;
     }
 
@@ -60,6 +68,7 @@ void parser(struct node *curr, char *eq, int len)
 
     // bracket parsing. if there's an equation that has brackets on the outside, we recurse with no action.
     // this is very inefficient, since we have to match and count brackets...
+    // but we have to start somewhere
     for (int i = 0; i < len; i++)
     {
         // match either ( or )
@@ -68,13 +77,28 @@ void parser(struct node *curr, char *eq, int len)
         else if (*(eq + i) == ')')
             brck--;
 
-        // see if we have a two-sided operator
+        // There's a missing operator...
+        // luckily there are only few cases
+        if (
+            (*(eq + i) == '1' && *(eq + i + 1) == '1') ||
+            (*(eq + i) == '0' && *(eq + i + 1) == '0') ||
+            (*(eq + i) == '1' && *(eq + i + 1) == NOT) ||
+            (*(eq + i) == '0' && *(eq + i + 1) == NOT) ||
+            (*(eq + i) == ')' && *(eq + i + 1) == NOT) ||
+            (*(eq + i) == ')' && *(eq + i + 1) == '0') ||
+            (*(eq + i) == ')' && *(eq + i + 1) == '1') ||
+            (*(eq + i) == ')' && *(eq + i + 1) == '('))
+        {
+            printf("[\e[91mERR\e[0m] Missing Operator Error at index: \e[35m%d\e[0m\n", startpos + i);
+            exit(0);
+        }
+
+        // See if we do have a proper operator AND no open brackets
         if ((*(eq + i) == OR || *(eq + i) == AND) && (brck == 0))
         {
-            opIdx = i;
-            if (DEBUG)
-                printf("found operator: %c\n", *(eq + opIdx));
-            break; // we don't continue, we parse LTR
+
+            opIdx = i; // set the operator's index
+            break; // we don't continue, we found the operator.
         }
     }
 
@@ -96,24 +120,19 @@ void parser(struct node *curr, char *eq, int len)
         strncpy(partitionA, eq, lenA - 1);
         strncpy(partitionB, eq + opIdx + 1, lenB - 1);
 
-        // print the partitions to stdout. DEBUG ONLY!!!
-        if (DEBUG)
-        {
-            printf("Expression: %s\n", eq);
-            printf("partition A: %d\n", lenA);
-            printf("partition B: %d\n", lenB);
-        }
-
         // assign the operator
         struct node *a = newNode();
         struct node *b = newNode();
 
-        parser(a, partitionA, lenA - 1);
-        free(partitionA);
+        // recursively descend further
+        // TODO: use multithreading?
+        parser(a, partitionA, lenA - 1, startpos);
+        free(partitionA); // free the memory we used for the branch
 
-        parser(b, partitionB, lenB - 1);
-        free(partitionB);
+        parser(b, partitionB, lenB - 1, startpos + opIdx + 1);
+        free(partitionB); // free the memory we used for the branch
 
+        // save a pointer in our node
         curr->data = *(eq + opIdx);
         curr->left = a;
         curr->right = b;
@@ -122,32 +141,26 @@ void parser(struct node *curr, char *eq, int len)
     }
     else
     {
-        if (DEBUG)
-        {
-            printf("Expression: %s\n", eq);
-            printf("no operator\n");
-            printf("BOOL: %c\n", *(eq + len - 1));
-        }
-        // (~1)\0
+
+        // a fenced expression
         if ((*eq == '(') & (*(eq + len - 1) == ')'))
         {
-            printf("this is fenced\n");
+
             // remove fencing
             int newLen = len - 1;
             char *temp = malloc(len);
             *(temp + newLen - 1) = '\0';
             strncpy(temp, eq + 1, newLen - 1);
 
-            if (DEBUG)
-                printf("unfenced eq: %s\n", temp);
             // try again
-            parser(curr, temp, newLen - 1);
+            parser(curr, temp, newLen - 1, startpos + 1);
             free(temp);
             return;
         }
-        else if (*(eq) == '~')
+
+        // a negated expression
+        else if (*(eq) == NOT)
         {
-            printf("negated");
             struct node *leaf = newNode();
             int newlen = len;
             char *newstr = malloc(newlen);
@@ -157,27 +170,46 @@ void parser(struct node *curr, char *eq, int len)
 
             curr->data = '~';
             curr->left = leaf;
-            parser(leaf, newstr, newlen - 1);
+
+            // descend further
+            parser(leaf, newstr, newlen - 1, startpos + 1);
             free(newstr);
+
             return;
         }
+
+        // welp, here's something i didn't expect
         else
         {
-            printf("Error while parsing.");
-            exit(EXIT_FAILURE);
+            printf("[\e[91mERR\e[0m] Unexpected Error around index \e[35m%d\e[0m while parsing.\n", startpos);
+            exit(0);
         }
     }
 }
 
-int solver(void)
+// solver function, this really explains itself
+int solver(struct node *treeNode)
 {
-    return 0;
+    switch (treeNode->data)
+    {
+    case AND:
+        return solver(treeNode->left) && solver(treeNode->right); // 
+        break;
+    case OR:
+        return solver(treeNode->left) || solver(treeNode->right); // return solved OR expression
+        break;
+    case NOT:
+        return !solver(treeNode->left); // return negated data
+        break;
+
+    default:
+        return (int)treeNode->data - '0'; // return our data converted to an integer
+        break;
+    }
 }
 
-void eqBuilder(char **out, struct node **curr)
-{
-}
 
+// main function
 int main(void)
 {
     FILE *fd = fopen("boolsche-ausdruecke", "r");
@@ -190,30 +222,38 @@ int main(void)
 
     // create a buffer of filesize+200. just in case we overflow with a \0
     // this will be shrunken down later.
-    char *buf = malloc(fsize+200);
-    memset(buf, '\0', fsize+200);
+    char *buf = malloc(fsize + 200);
+    memset(buf, '\0', fsize + 200);
 
-    // in our case, we want the last line. 
+    // in our case, we want the last line.
     // we can assume that this line is the longest for our case, so overwriting the buffer is fine.
     // this shouldn't be used, but it's the 2AM quick 'n dirty hotfix
     char *ptr;
     while ((ptr = fgets(buf, fsize, fd)) != NULL)
     {
-        if(ptr != NULL)
-            memset(buf, '\0', fsize); // over
     }
 
     // get size and reallocate memory to the correct size. we should only use what we need.
     // we can assume null termination, because we filled the memory with \0. it is impossible to exceed that
     // because any subset of characters is at most our max size
     int len = strlen(buf);
-    buf = realloc(buf, len+1); 
+    buf = realloc(buf, len + 1);
 
     char *str = "(~1&~~0|1|0&~0&0|0&1&1|~0&(0))&((~(~0)|0&0|1&0|1))|0&1&(~1&~~0|1|0&~0&0|0&1&1|~0&(0))&((~(~0)|0&0|1&0|1))|0&1&(~((~(1|~((1))&1&(0))))|(1))|~0&(~0|0|~0|1&1)&(~0&1|0)&0|1&0|1&0&(~1|~1&~1&0)|~0|0|1&0|0|(~(1)&((0|1|~~0|0|(1)&(1&(0)))))&(~((~(1|~((1))&1&(0))))|(1))|~0&(~0|0|~0|1&1)&(~0&1|0)&0|1&0|1&0&(~1|~1&~1&0)|~0|0|1&0|0|(~(1)&((0|1|~~0|0|(1)&(1&(0)))))&(~1&~~0|1|0&~0&0|0&1&1|~0&(0))&((~(~0)|0&0|1&0|1))|0&1&(~((~(1|~((1))&1&(0))))|(1))|~0&(~0|0|~0|1&1)&(~0&1|0)&0|1&0|1&0&(~1|~1&~1&0)|~0|0|1&0|0|(~(1)&((0|1|~~0|0|(1)&(1&(0)))))&(~1&~~0|1|0&~0&0|0&1&1|~0&(0))&((~(~0)|0&0|1&0|1))|0&1&(~((~(1|~((1))&1&(0))))|(1))|~0&(~0|0|~0|1&1)&(~0&1|0)&0|1&0|1&0&(~1|~1&~1&0)|~0|0|1&0|0|(~(1)&((0|1|~~0|0|(1)&(1&(0)))))&(~1&~~0|1|0&~0&0|0&1&1|~0&(0))&((~(~0)|0&0|1&0|1))|0&1&(~((~(1|~((1))&1&(0))))|(1))|~0&(~0|0|~0|1&1)&(~0&1|0)&0|1&0|1&0&(~1|~1&~1&0)|~0|0|1&0|0|(~(1)&((0|1|~~0|0|(1)&(1&(0)))))&(~1&~~0|1|0&~0&0|0&1&1|~0&(0))&((~(~0)|0&0|1&0|1))|0&1&(~((~(1|~((1))&1&(0))))|(1))|~0&(~0|0|~0|1&1)&(~0&1|0)&0|1&0|1&0&(~1|~1&~1&0)|~0|0|1&0|0|(~(1)&((0|1|~~0|0|(1)&(1&(0)))))&(~1&~~0|1|0&~0&0|0&1&1|~0&(0))&((~(~0)|0&0|1&0|1))|0&1&(~((~(1|~((1))&1&(0))))|(1))|~0&(~0|0|~0|1&1)&(~0&1|0)&0|1&0|1&0&(~1|~1&~1&0)|~0|0|1&0|0|(~(1)&((0|1|~~0|0|(1)&(1&(0)))))&(~1&~~0|1|0&~0&0|0&1&1|~0&(0))&((~(~0)|0&0|1&0|1))|0&1&(~((~(1|~((1))&1&(0))))|(1))|~0&(~0|0|~0|1&1)&(~0&1|0)&0|1&0|1&0&(~1|~1&~1&0)|~0|0|1&0|0|(~(1)&((0|1|~~0|0|(1)&(1&(0)))))&(~1&~~0|1|0&~0&0|0&1&1|~0&(0))&((~(~0)|0&0|1&0|1))|0&1&(~((~(1|~((1))&1&(0))))|(1))|~0&(~0|0|~0|1&1)&(~0&1|0)&0|1&0|1&0&(~1|~1&~1&0)|~0|0|1&0|0|(~(1)&((0|1|~~0|0|(1)&(1&(0)))))&(~1&~~0|1|0&~0&0|0&1&1|~0&(0))&((~(~0)|0&0|1&0|1))|0&1&(~((~(1|~((1))&1&(0))))|(1))|~0&(~0|0|~0|1&1)&(~0&1|0)&0|1&0|1&0&(~1|~1&~1&0)|~0|0|1&0|0|(~(1)&((0|1|~~0|0|(1)&(1&(0)))))&(~1&~~0|1|0&~0&0|0&1&1|~0&(0))&((~(~0)|0&0|1&0|1))|0&1&(~((~(1|~((1))&1&(0))))|(1))|~0&(~0|0|~0|1&1)&(~0&1|0)&0|1&0|1&0&(~1|~1&~1&0)|~0|0|1&0|0|(~(1)&((0|1|~~0|0|(1)&(1&(0)))))&(~1&~~0|1|0&~0&0|0&1&1|~0&(0))&((~(~0)|0&0|1&0|1))|0&1&(~((~(1|~((1))&1&(0))))|(1))|~0&(~0|0|~0|1&1)&(~0&1|0)&0|1&0|1&0&(~1|~1&~1&0)|~0|0|1&0|0|(~(1)&((0|1|~~0|0|(1)&(1&(0)))))";
+    //char *str = "~(1&(1&0))";
+
     // create a new node
     struct node *root = newNode();
 
-    parser(root, str, strlen(str));
-    printf("\nWord Length: %d\n", (int) strlen(str));
+    // start the parser
+    printf("[\e[93mLOG\e[0m] Word Length: %d\n", (int)strlen(str));
+    printf("[\e[93mLOG\e[0m] starting parser...\n");
+    parser(root, str, strlen(str), 0);
+    printf("[\e[93mLOG\e[0m] The Expression was parsed Successfully\n");
+
+    printf("[\e[93mLOG\e[0m] starting solver...\n");
+    int solution = solver(root);
+
+    printf("[\e[34mOUT\e[0m] the solution is: %d\n", solution);
     return 0;
 }
