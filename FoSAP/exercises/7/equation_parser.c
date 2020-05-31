@@ -17,9 +17,9 @@
 #define AND '&'
 
 // compound operators (TODO: IMPLEMENT)
-#define XOR '%'
-#define IMP '@'
-#define EQI '='
+#define XOR '%' // xor
+#define IMP '@' // implication
+#define EQI '=' // equivalence
 
 // struct definitions
 // any expression is like a bool tree, so let's generate one.
@@ -99,7 +99,7 @@ void parser(struct node *curr, char *eq, int len, int startpos)
         }
 
         // See if we do have a proper operator AND no open brackets
-        if ((*(eq + i) == OR || *(eq + i) == AND) && (brck == 0))
+        if ((*(eq + i) == OR || *(eq + i) == AND || *(eq + i) == XOR) && (brck == 0))
         {
 
             opIdx = i; // set the operator's index
@@ -230,9 +230,18 @@ int solver(struct node *treeNode)
 int main(void)
 {
     // open the file
-    FILE *fd = fopen("boolsche-ausdruecke", "r");
+    char* fname = "boolsche-ausdruecke";
+    FILE *fd = fopen(fname, "r");
     long int fsize;
 
+    if(fd == NULL){
+        char* cwd = malloc(200);
+        getcwd(cwd, 200);
+        printf("[\e[91mERR\e[0m] Unexpected Error while opening file: \e[35m%s/%s\e[0m\n", cwd, fname);
+        printf("      Please make sure the file is in the same folder.\n");
+        free(cwd);
+        exit(0);
+    }
     // get file size
     fseek(fd, 0, SEEK_END);
     fsize = ftell(fd);
@@ -255,7 +264,7 @@ int main(void)
         // because any subset of characters is at most our max size
         int len = strlen(buf);
         buf = realloc(buf, len);
-        *(buf+len-1) = '\0';
+        *(buf+len-1) = '\0'; // replace any stray \n with \0
 
         // create a new node
         struct node *root = newNode();
