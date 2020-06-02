@@ -128,6 +128,7 @@ void push(StackNode **pointer2root, char *command)
   }
 }
     \end{lstlisting}
+    \newpage
 
     % pop function subsection
     \subsection{b -The \texttt{pop()} Function}
@@ -345,10 +346,10 @@ fi
     Getting to the actual command, I used \lstinline{sort teamnamen.txt} to first get a sorted list, because I then piped it 
     into \lstinline{uniq -c}, which gives a counted list of unique elements. After that, it is piped into \lstinline+awk {print $1}'+, 
     to strip the group names, then numerically sorted with \lstinline{sort -n}, only to be piped into \lstinline{uniq -c} again, so we can get a nicer output.
-    The Command also uses a temporary variable \lstinline{GROUP}, so one can change the output. The last part then gets piped into 
-    \lstinline{head -n $GROUP} and then to \lstinline{tail -n 1} so it only gives us the line we want. \texttt{GROUP} can change that output to be either a group 
-    of 1-3 people, or the nullgroup. And this is said monstrosity:\\
-    \lstinline+GROUP=1 echo $(sort teamnamen.txt | uniq -c | awk '{print $1}' | sort -n | uniq -c | head -n $GROUP | tail -n 1)+ 
+    The last part then gets piped into \lstinline{head -n 1} and then to \lstinline{tail -n 1} so it only gives us the line we want. Changing the input to 
+    \lstinline{head -n 1} can change that output to be either a group of 1-3 people, or the nullgroup by using a value of 1-4. 
+    Now getting back to showing the actual monstrosity:\\
+    \lstinline+sort teamnamen.txt | uniq -c | awk '{print $1}' | sort -n | uniq -c | head -n 1 | tail -n 1+ 
 
     \subsection{d - More Text Processing and grouping}
     Since i already explained everything up to the last \texttt{awk} command in the previous, i will not explain it again.
