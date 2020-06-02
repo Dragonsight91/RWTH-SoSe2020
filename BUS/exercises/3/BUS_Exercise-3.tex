@@ -107,9 +107,10 @@
     \section{Linux Processes and Child creation}
     
     \subsection{Controlled Forking}
-    To control the output of parent and child, we need another \texttt{if-else} construct, testing the return value of \texttt{fork()}. If said value is 0, 
-    we are in the child and we can execute \texttt{child\_B\_proc()}, otherwise we execute \texttt{child\_A\_proc()}. The final code looks like this:\\
-    \lstinputlisting{prozesse.c}
+    To control the output of parent and child, we need another \texttt{if-else} construct, testing the return value of 
+    \texttt{fork()}. If said value is 0, we are in the child and we can execute \texttt{child\_B\_proc()}, otherwise we 
+    execute \texttt{child\_A\_proc()}. The final code looks like this:
+    \lstinputlisting{3.1_prozesse.c}
     \newpage
     
     \subsection{Streams}
@@ -140,7 +141,9 @@
     \subsection{Parent/Child execution priority}
     Using the program \texttt{charcount.c}, one can pipe \texttt{prozesse.c} into it and observe, that the percentage frequency is approximately $30\%$.
     This percentage drifts around, due to the random execution order. In long term observation, one can see that the frequency will drift further, suddenly prioritizing
-    a single process A LOT stronger, but then changing between them. The conclusion would be, that, on average, all processes have the same priority and frequency. 
+    a single process A LOT stronger, but then changing between them. The conclusion would be, that, on average, all processes have the same priority and frequency.
+    \newpage
+    \lstinputlisting{3.1_charcounter.c}
     \newpage
 
     \section{Tree Hugging}
@@ -174,10 +177,12 @@
     How does one wait for a child to terminate itself, you might ask? Simply by using \lstinline{exit(0);} in the child process. 
     To use wait and exit, we have to do \lstinline{#include <stdlib.h>} and \lstinline{#include <sys/wait.h>}.
     Now we are able to use \lstinline{wait} and \lstinline{exit}.\\
-    since we can just use \lstinline{wait(NULL);} to block a parent until all children are done, we just use that a bunch of times.
+    Since we can just use \lstinline{wait(NULL);} to block a parent until all children are done, we just use that a bunch of times.
     Before we can get a fully deterministic output, we have to end some processes early, to only get the unique output. we can do 
     this by checking if \lstinline{fork();} returned 0, meaning we are in a child, and then terminating early. I terminated all child
     processes before the 20, they are useless here, because they give duplicate output.  
+    \newpage
+    \lstinputlisting{3.2_fork.c}
     \newpage
 
     \section{Process data communism}
