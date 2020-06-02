@@ -9,21 +9,35 @@
 \usepackage{hyperref}
 \usepackage{listings}
 \usepackage{color}
+\usepackage{amssymb}
 \usepackage{amsmath}
-\usepackage{amsfonts}
-\usepackage{amsthm}
 \usepackage{mathtools}
 \usepackage{microtype}
 \usepackage{stmaryrd}
 \usepackage{tikz}
-\usetikzlibrary{arrows,automata,positioning}
-
+\usepackage{booktabs}
+\usepackage{stmaryrd}
 
 % special math symbols
 \newcommand{\R}{\ensuremath{\mathbb{R}}}
 \newcommand{\N}{\ensuremath{\mathbb{N}}}
 \newcommand{\Z}{\ensuremath{\mathbb{Z}}}
 \newcommand{\Q}{\ensuremath{\mathbb{Q}}}
+
+% Fraktur für Strukturen
+\newcommand{\A}{\ensuremath{\mathfrak A}}
+\newcommand{\B}{\ensuremath{\mathfrak B}}
+\newcommand{\C}{\ensuremath{\mathfrak C}}
+\newcommand{\I}{\ensuremath{\mathfrak I}}
+
+% logical operators
+\newcommand{\xor}{\ensuremath{\oplus}} %exklusives oder
+\newcommand{\impl}{\ensuremath{\rightarrow}} %logische Implikation
+
+% nicer symbols
+\renewcommand{\phi}{\varphi}
+\renewcommand{\theta}{\vartheta}
+\renewcommand{\epsilon}{\varepsilon}
 
 % Syntax highlighting
 \definecolor{commentsColor}{rgb}{0.497495, 0.497587, 0.497464}
@@ -71,9 +85,61 @@
     % section 1
     \section{Structure and Tasks}
     \subsection{The structure of computer systems}
-
-    \subsection{The structure and Tasks of an OS}
+    \subsection{The Structure and Tasks of an OS}
     \subsection{Multitasking \& Interrupts}
+
+    \section{C Programming}
+    \section{Shell Programming}
+    % section 4
+    \section{Process Management}
+    \subsection{The Definition of a Process}
+    A process is simply a running program. This program consists of sequentially executed code, which defines state changes.
+    Part of a process is a full description of the CPUs current state, like the program counter, registers, the stack, 
+    the heap and any variables or filesthat are being worked on\\
+    A process is created like this:
+    \begin{enumerate}
+      \item Create the Process evironment in RAM.
+      \begin{itemize}
+        \item create the heap
+        \item create the stack
+        \item load program code
+        \item load libraries
+      \end{itemize} 
+      \item wait for CPU assignment
+      \item Load operation into CPU register and execute
+      \item If a process is interrupted, its state is saved and another process will get CPU time.
+    \end{enumerate}
+    \subsection{Memory Allocation}
+    A process gets 3GiB of memory by default. Memory allocation is broken up into 5 parts.
+    \begin{itemize}
+      \item The stack, which holds function parameters and local variables. This is automatically managed memory.
+      \item The heap, which is dynamically allocated memory \texttt{malloc}. This gives the programmer full control over the Memory management
+            but can cause alot of problems, if not used carefully. Heap-Buffer-Overflows are very common when manually controlling the memory
+            allocation. This happens when a program writes more data into memory than the variable has been assigned. This then overwrites any 
+            memory that comes after the variable's memory space.
+      \item Statically allocated memory and global data. this is broken up into bss, for \lstinline{NULL-}initialized variables and data,
+            for other variables.
+      \item The code, which holde the executable program code
+    \end{itemize}
+
+    \subsection{Process Types}
+    \begin{enumerate}
+      \item \texttt{The User Process}, for System Programs and Applications. These all run in \texttt{User-Mode}
+      \item \texttt{The System Process}, forparts of the Kernel. This includes but is not limited
+            to memory management, file system management and device management. These Processes have a higher
+            priority and operate in \texttt{Kernel-Mode}.
+    \end{enumerate}
+    There are multiple active processes at any given time, which have to be coordinated efficiently, because they can all
+    use the same resources. These recources may include memory space, CPU time and IO-devices, such as storage, sensors, screens and peripherals.
+
+    \subsubsection{Process Coordination}
+
+    \subsubsection{Pipes}
+    \subsubsection{Message Passing}
+    \subsubsection{Shared Memory}
+
+    \subsection{Threads}
+
 
 \end{document}
 
