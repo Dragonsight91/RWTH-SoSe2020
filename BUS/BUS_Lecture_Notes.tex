@@ -15,8 +15,8 @@
 \usepackage{microtype}
 \usepackage{stmaryrd}
 \usepackage{tikz}
-\usepackage{booktabs}
 \usepackage{stmaryrd}
+\usepackage{enumitem}
 
 % special math symbols
 \newcommand{\R}{\ensuremath{\mathbb{R}}}
@@ -87,9 +87,13 @@
     \subsection{The structure of computer systems}
     \subsection{The Structure and Tasks of an OS}
     \subsection{Multitasking \& Interrupts}
+    \newpage
 
     \section{C Programming}
+    \newpage
+
     \section{Shell Programming}
+    \newpage
     % section 4
     \section{Process Management}
     \subsection{The Definition of a Process}
@@ -139,7 +143,32 @@
     \subsubsection{Shared Memory}
 
     \subsection{Threads}
+    \newpage
 
+    \section{CPU Scheduling}
+    \subsection{Tasks and simple strategies}
+    These strategies typically don't apply to modern systems anymore, but make it easier to understand the principles od scheduling.
+    \subsubsection{Tasks of Scheduling}
+    During its lifetime, a process goes into queues, where a scheduler has to decide which process gets the resource. The task of the scheduler is to manage 
+    resources for many different processes, dynamically moving a process in and out of queues, as needed. To execute a process, two things need to happen:
+    \begin{enumerate}
+      \item The process has to be loaded into main memory
+      \item the process has to get CPU time
+    \end{enumerate} 
+    There are multiple strategies for scheduling processes. 
+    \begin{itemize}[leftmargin=\parindent+1.65in]
+      \item[\texttt{Long-Term Scheduling -}] This decides which process gets 
+      added to the ready queue and can take from minutes to even several days. One example for this would be Backup timing, where it is unnecessary and even
+      inefficient to execute in too little time intervals, as a the process itself can take several hours.
+      \item[\texttt{Mid-Term Scheduling -}] This scheduler decides which process is to be executed next and thus will be loaded into memory before execution.
+      This usually takes no more than a few seconds.
+      \item[\texttt{Short-Term Scheduling -}] This scheduling happens when we have to decide, which process can use the CPU next. This is done within a few milliseconds.
+    \end{itemize}
+
+
+    \subsection{Strategies for modern systems}
+    \subsection{Multiprocessor/Multicore systems}
+    \subsection{Scheduling in Linux}
 
 \end{document}
 

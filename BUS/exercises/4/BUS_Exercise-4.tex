@@ -17,6 +17,7 @@
 \usepackage{tikz}
 \usepackage{booktabs}
 \usepackage{stmaryrd}
+\usepackage{enumitem}
 
 % special math symbols
 \newcommand{\R}{\ensuremath{\mathbb{R}}}
@@ -72,7 +73,7 @@
 }
 
 \author{Thilo Metzlaff\\406247 \and Mats Frenk\\393702\and René van Emelen\\406008}
-\title{BUS Exercise 2 \\ Group 23}
+\title{BUS Exercise 4 \\ Group 23}
 \begin{document}
     % titlepage
     \maketitle
@@ -94,7 +95,7 @@ System rebooting...
     \end{verbatim}
     Uh \dots what? did it just... remove \textit{EVERYTHING}? Here's a lesson on letting unpaid interns access sensitive systems\dots\\
     Welp, the original configuration seems to be \dots gone\dots along with everything else\dots
-    Good that i make backups, so please enjoy this backup and please remember to back up your files, in case\dots you let an unpaid intern automate things\dots
+    Good that i make backups, so please enjoy this backup and please remember to back up your files, in case you\dots let an unpaid intern automate things\dots
     Maybe that's how the period got lost\dots  
 
     \subsection*{THE FORMAT}
@@ -114,6 +115,183 @@ System rebooting...
             they seem to be notoriously hard to find
     \end{itemize}
     \newpage
+    \section{Simpler Scheduling Strategies}
+    \subsection{FIFO - Veni Vidi Vici}
+    \begin{flushright}
+      \begin{tabular}{l@{}*{27}{@{}p{5mm}@{}|@{}}}
+      &
+      \multicolumn{2}{c}{0} & \multicolumn{3}{c}{ } &
+      \multicolumn{2}{c}{5} & \multicolumn{3}{c}{ } &
+      \multicolumn{2}{c}{10} & \multicolumn{3}{c}{ } &
+      \multicolumn{2}{c}{15} & \multicolumn{3}{c}{ } &
+      \multicolumn{2}{c}{20} & \multicolumn{3}{c}{ } &
+      \multicolumn{2}{c}{25}\\
+      &&&&&&&&&&&&&&&&&&&&&&&&&&&\multicolumn{1}{c}{} \\ \cline{3-27}
+      \parbox[c][9mm][c]{10mm}{Lösung} &
+      & \multicolumn{5}{c|}{$P_1$}
+      & \multicolumn{2}{c|}{$P_2$}
+      & \multicolumn{7}{c|}{$P_3$}
+      & \multicolumn{3}{c|}{$P_4$}
+      & \multicolumn{2}{c|}{$P_5$}
+      & \multicolumn{4}{c|}{$P_6$}
+      & \multicolumn{2}{c|}{$P_7$}
+      \\ \cline{3-27}
+      \end{tabular}
+    \end{flushright}
+    Average Wait time: $\frac{0+4+5+11+10+11+10}{7} = 7.2857$
     
 
+    \subsection{LIFO - Iciv Idiv Inev}
+    \begin{flushright}
+      \begin{tabular}{l@{}*{27}{@{}p{5mm}@{}|@{}}}
+        &
+        \multicolumn{2}{c}{0} & \multicolumn{3}{c}{ } &
+        \multicolumn{2}{c}{5} & \multicolumn{3}{c}{ } &
+        \multicolumn{2}{c}{10} & \multicolumn{3}{c}{ } &
+        \multicolumn{2}{c}{15} & \multicolumn{3}{c}{ } &
+        \multicolumn{2}{c}{20} & \multicolumn{3}{c}{ } &
+        \multicolumn{2}{c}{25}\\
+        &&&&&&&&&&&&&&&&&&&&&&&&&&&\multicolumn{1}{c}{} \\ \cline{3-27}
+        \parbox[c][9mm][c]{10mm}{Lösung} &
+        & \multicolumn{2}{c|}{$P_7$}
+        & \multicolumn{4}{c|}{$P_6$}
+        & \multicolumn{2}{c|}{$P_5$}
+        & \multicolumn{3}{c|}{$P_4$}
+        & \multicolumn{7}{c|}{$P_3$}
+        & \multicolumn{2}{c|}{$P_2$}
+        & \multicolumn{5}{c|}{$P_1$}
+        \\ \cline{3-27}
+      \end{tabular}
+    \end{flushright}
+    Average Wait time: $\frac{(2*0)+22+14+2+5+1}{7} = 6.2857$
+
+
+    \subsection{SPT - How nerds share a bathroom.}
+    \begin{flushright}
+      \begin{tabular}{l@{}*{27}{@{}p{5mm}@{}|@{}}}
+        &
+        \multicolumn{2}{c}{0} & \multicolumn{3}{c}{ } &
+        \multicolumn{2}{c}{5} & \multicolumn{3}{c}{ } &
+        \multicolumn{2}{c}{10} & \multicolumn{3}{c}{ } &
+        \multicolumn{2}{c}{15} & \multicolumn{3}{c}{ } &
+        \multicolumn{2}{c}{20} & \multicolumn{3}{c}{ } &
+        \multicolumn{2}{c}{25}\\
+        &&&&&&&&&&&&&&&&&&&&&&&&&&&\multicolumn{1}{c}{} \\ \cline{3-27}
+        \parbox[c][9mm][c]{10mm}{Lösung} &
+        & \multicolumn{5}{c|}{$P_1$}
+        & \multicolumn{2}{c|}{$P_2$}
+        & \multicolumn{2}{c|}{$P_5$}
+        & \multicolumn{3}{c|}{$P_4$}
+        & \multicolumn{4}{c|}{$P_6$}
+        & \multicolumn{2}{c|}{$P_7$}
+        & \multicolumn{7}{c|}{$P_3$}
+        \\ \cline{3-27}
+      \end{tabular}
+    \end{flushright}
+    Average Wait time: $\frac{(2*0)+4+16+6+4+3}{7} = 6.2857$
+
+    \subsection{SRPT - How i wish my time management worked.}
+    \begin{flushright}
+      \begin{tabular}{l@{}*{27}{@{}p{5mm}@{}|@{}}}
+        &
+        \multicolumn{2}{c}{0} & \multicolumn{3}{c}{ } &
+        \multicolumn{2}{c}{5} & \multicolumn{3}{c}{ } &
+        \multicolumn{2}{c}{10} & \multicolumn{3}{c}{ } &
+        \multicolumn{2}{c}{15} & \multicolumn{3}{c}{ } &
+        \multicolumn{2}{c}{20} & \multicolumn{3}{c}{ } &
+        \multicolumn{2}{c}{25}\\
+        &&&&&&&&&&&&&&&&&&&&&&&&&&&\multicolumn{1}{c}{} \\ \cline{3-27}
+        \parbox[c][9mm][c]{10mm}{Lösung} &
+        & \multicolumn{1}{c|}{$P_1$}
+        & \multicolumn{2}{c|}{$P_2$}
+        & \multicolumn{3}{c|}{$P_4$}
+        & \multicolumn{1}{c|}{$P_1$}
+        & \multicolumn{2}{c|}{$P_5$}
+        & \multicolumn{3}{c|}{$P_1$}
+        & \multicolumn{2}{c|}{$P_7$}
+        & \multicolumn{4}{c|}{$P_6$}
+        & \multicolumn{7}{c|}{$P_3$}
+        \\ \cline{3-27}
+      \end{tabular}
+    \end{flushright}
+    Average Wait time: $\frac{7+16+6+(4*0)}{7} = 4.129$ 
+    \newpage
+
+    \section{EDF scheduling}
+    \subsection{Mother Knows Best}
+    \begin{flushright}
+      \begin{tabular}{l@{}*{22}{@{}p{5mm}@{}|@{}}}
+        &
+        \multicolumn{2}{c}{0} & \multicolumn{3}{c}{ } & \multicolumn{2}{c}{5} & \multicolumn{3}{c}{ } & \multicolumn{2}{c}{10} & \multicolumn{3}{c}{ } & \multicolumn{2}{c}{15} & \multicolumn{3}{c}{ } & \multicolumn{2}{c}{20} \\
+        &&&&&&&&&&&&&&&&&&&&&&\multicolumn{1}{c}{} \\ \cline{3-22}
+        \parbox[c][9mm][c]{10mm}{CPU1} &
+        & \multicolumn{2}{c|}{$P_1$}
+        & \multicolumn{3}{c|}{$P_3$}
+        & \multicolumn{3}{c|}{$P_5$}
+        & \multicolumn{4}{c|}{$P_3$}
+        & \multicolumn{3}{c|}{$P_7$}
+        & \multicolumn{5}{c|}{$P_1$} \\ \cline{3-22}
+        \parbox[c][9mm][c]{10mm}{CPU2} &
+        & \multicolumn{1}{c|}{}
+        & \multicolumn{3}{c|}{$P_2$}
+        & \multicolumn{3}{c|}{$P_4$}
+        & \multicolumn{3}{c|}{$P_2$}
+        & \multicolumn{3}{c|}{$P_6$}
+        & \multicolumn{7}{c|}{ } \\ \cline{3-22}
+      \end{tabular}
+    \end{flushright}
+    \subsection{missed opportunities}
+
+    \subsection{remodeling}
+    \begin{flushright}
+      \begin{tabular}{l@{}*{22}{@{}p{5mm}@{}|@{}}}
+        &
+        \multicolumn{2}{c}{0} & \multicolumn{3}{c}{ } & \multicolumn{2}{c}{5} & \multicolumn{3}{c}{ } & \multicolumn{2}{c}{10} & \multicolumn{3}{c}{ } & \multicolumn{2}{c}{15} & \multicolumn{3}{c}{ } & \multicolumn{2}{c}{20} \\
+        &&&&&&&&&&&&&&&&&&&&&&\multicolumn{1}{c}{} \\ \cline{3-22}
+        \parbox[c][9mm][c]{10mm}{CPU1} &
+        & \multicolumn{2}{c|}{$P_1$}
+        & \multicolumn{3}{c|}{$P_3$}
+        & \multicolumn{3}{c|}{$P_5$}
+        & \multicolumn{4}{c|}{$P_3$}
+        & \multicolumn{3}{c|}{$P_7$}
+        & \multicolumn{5}{c|}{ } \\ \cline{3-22}
+        \parbox[c][9mm][c]{10mm}{CPU2} &
+        & \multicolumn{1}{c|}{}
+        & \multicolumn{3}{c|}{$P_2$}
+        & \multicolumn{3}{c|}{$P_4$}
+        & \multicolumn{3}{c|}{$P_2$}
+        & \multicolumn{3}{c|}{$P_6$}
+        & \multicolumn{1}{c|}{ }
+        & \multicolumn{5}{c|}{$P_1$}
+        & \multicolumn{1}{c|}{ } \\ \cline{3-22}
+      \end{tabular}
+    \end{flushright}
+
+    \newpage
+    \section{MLFQ}
+    \begin{tabular}{r|l|l|l|l|l|l}
+      t      & Kl. 0 FIFO(1)   & Kl. 1 $RR_2$(4)   & Kl. 2 $RR_6$(16)  & Kl. 3 FIFO      & Incoming     & Running   \\
+      \hline
+      0      & -               & -                             & -                  & -              & $A(7),B(6)$  &  -      \\
+      1      & -               & -                             & $B_{2,0}(6)$       & -              & $C(1)$       & $A_{1,0}(7)$       \\
+      2      & -               & $A_{1,1}(6)$                  & $B_{2,0}(6)$       &                & $D(2)$       & $C_{0,0}(1)$         \\
+      3      & -               & $D(2)$                        & $B_{2,0}(6)$       & -              & -            & $A_{1,1}(6)$       \\
+      4      & -               & $A_{1,2}(5)$                  & $B_{2,0}(6)$       & -              & -            & $D_{1,0}(2)$       \\
+      5      & -               & $A_{1,2}(5)$                  & $B_{2,0}(6)$       & -              & $E(17)$      & $D_{1,1}(1)$       \\
+      6      & -               & -                             & $B_{2,0}(6)$       & $E(17)$        & -            & $A_{1,2}(5)$       \\
+      7      & -               & -                             & $B_{2,0}(6)$       & $E(17)$        & -            & $A_{1,3}(4)$       \\
+      8      & -               & -                             & $A_{2,0}(3)$       & $E(17)$        & -            & $B_{2,0}(6)$       \\
+      9      & -               & -                             & $A_{2,0}(3)$       & $E(17)$        & -            & $B_{2,1}(5)$       \\
+      10     & -               & -                             & $A_{2,0}(3)$       & $E(17)$        & $F(3)$       & $B_{2,2}(4)$       \\
+      11     & -               & -                             & $B_{2,3}(3),A(3)$  & $E(17)$        & -            & $F_{1,0}(3)$       \\
+      12     & -               & -                             & $B_{2,3}(3),A(3)$  & $E(17)$        & -            & $F_{1,1}(2)$       \\
+      13     & -               & -                             & $B_{2,3}(3),A(3)$  & $E(17)$        & $G(5)$       & $F_{1,2}(1)$       \\
+      14     & -               & -                             & $B_{2,3}(3),A(3)$  & $E(17)$        & -            & $G_{0,0}(5)$       \\
+      15     & -               & -                             & $B_{2,3}(3),A(3)$  & $E(17)$        & $H(3)$       & $G_{1,0}(4)$       \\
+      16     & -               & $H(3)$                        & $B_{2,3}(3),A(3)$  & $E(17)$        & $I(3)$       & $G_{1,1}(3)$       \\
+      17     & -               & $I_{1,0}(3), G_{1,2}(2)$      & $B_{2,3}(3),A(3)$  & $E(17)$        & -            & $H_{1,0}(3)$              \\
+      18     & -               & $I_{1,0}(3), G_{1,2}(2)$      & $B_{2,3}(3),A(3)$  & $E(17)$        & -            & $H_{1,1}(2)$   \\
+      19     & -               & $G_{1,2}(2),H_{1,2}(1)$       & $B_{2,3}(3),A(3)$  & $E(17)$        & -            & $I_{1,0}(3)$              \\
+      20     & -               & $G_{1,2}(2),H_{1,2}(1)$       & $B_{2,3}(3),A(3)$  & $E(17)$        & -            & $I_{1,1}(2)$   \\
+    \end{tabular} 
 \end{document}
