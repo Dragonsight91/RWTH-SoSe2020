@@ -1,0 +1,160 @@
+% general format definition
+\documentclass[a4paper, 11pt]{article}
+\usepackage[margin=.9in]{geometry}
+\usepackage[utf8]{inputenc}
+\usepackage[T1,T2A]{fontenc}
+\usepackage[english,russian]{babel}
+
+% extra packages
+\usepackage{hyperref}
+\usepackage{listings}
+\usepackage{color}
+\usepackage{amssymb}
+\usepackage{amsmath}
+\usepackage{mathtools}
+\usepackage{microtype}
+\usepackage{stmaryrd}
+\usepackage{tikz}
+\usepackage{booktabs}
+\usepackage{stmaryrd}
+
+% Syntax highlighting
+\definecolor{commentsColor}{rgb}{0.497495, 0.497587, 0.497464}
+\definecolor{keywordsColor}{rgb}{0.000000, 0.000000, 0.635294}
+\definecolor{stringColor}{rgb}{0.558215, 0.000000, 0.135316}
+\lstset{
+  backgroundcolor=\color{white},                        % choose the background color; you must add \usepackage{color} or \usepackage{xcolor}
+  basicstyle=\footnotesize,                             % the size of the fonts that are used for the code
+  breakatwhitespace=false,                              % sets if automatic breaks should only happen at whitespace
+  breaklines=true,                                      % sets automatic line breaking
+  captionpos=b,                                         % sets the caption-position to bottom
+  commentstyle=\color{commentsColor}\textit,            % comment style
+  deletekeywords={},                                    % if you want to delete keywords from the given language
+  escapeinside={\%*}{*)},                               % if you want to add LaTeX within your code
+  extendedchars=true,                                   % lets you use non-ASCII characters; for 8-bits encodings only, does not work with UTF-8
+  frame=tb,	                   	                        % adds a frame around the code
+  keepspaces=true,                                      % keeps spaces in text, useful for keeping indentation of code (possibly needs columns=flexible)
+  keywordstyle=\color{keywordsColor}\bfseries,          % keyword style
+  otherkeywords={True,False,true,false,null,None,NULL}, % if you want to add more keywords to the set
+  numbers=left,                                         % where to put the line-numbers; possible values are (none, left, right)
+  numbersep=5pt,                                        % how far the line-numbers are from the code
+  numberstyle=\tiny\color{commentsColor},               % the style that is used for the line-numbers
+  rulecolor=\color{black},                              % if not set, the frame-color may be changed on line-breaks within not-black text (e.g. comments (green here))
+  showspaces=false,                                     % show spaces everywhere adding particular underscores; it overrides 'showstringspaces'
+  showstringspaces=false,                               % underline spaces within strings only
+  showtabs=false,                                       % show tabs within strings adding particular underscores
+  stepnumber=1,                                         % the step between two line-numbers. If it's 1, each line will be numbered
+  stringstyle=\color{stringColor},                      % string literal style
+  tabsize=2,	                                          % sets default tabsize to 2 spaces
+  title=\lstname,                                       % show the filename of files included with \lstinputlisting; also try caption instead of title
+  columns=fixed,                                        % Using fixed column width (for e.g. nice alignment)
+}
+
+\author{Emma van Emelen}
+\title{Russian Homework\\\Large Jasno - Page 32-35}
+\begin{document}
+     \maketitle
+     \newpage
+     \tableofcontents
+     \newpage
+
+     \section{Section A}
+     \subsection{a/b}
+     \begin{itemize}
+       \item сын сына $\rightarrow$ внук
+       \item мать отца $\rightarrow$ бабушка
+       \item родители $\rightarrow$ отец и мать
+       \item отец отца $\rightarrow$ дедушка
+       \item дочь сына $\rightarrow$ внучка
+       \item дети папы и мамы $\rightarrow$ брат и сестра
+     \end{itemize}
+     \subsection{Exercise 1a}
+     Im Russischen gibt es vier Zischlaute: \textbf{ж, ч, ш} und \textbf{щ}.
+     \textbf{ж} wird \textbf{stimmhaft} gesprochen, die anderen zischlaute sind stimmlos.
+     \subsection{Exercise 1b}
+     жена, дочь, дочка, бабушка, наш, муж, ваша, внучка, дедушка, ещё, наши, жить, москвичка
+     \subsection{Exercise 1c}
+     \begin{itemize}
+      \item[\textbf{ж:}] пожалуйста
+      \item[\textbf{ч:}] очень, грамматические, четыре
+      \item[\textbf{ш:}] нерушимость, груша
+     \end{itemize}
+     \subsection{Excercise 2}
+     \begin{itemize}
+      \item Здравствуйте, Николай Петрович!
+      \item Здравствуйте, Виктор Сергеевич! Познакомьтесь, пожалуйста, вот моя семья. Это моя жена, Елена Михаиловна Цветаева.
+      \item Очень приятно. Меня зовут Виктор Сергеевич, а моя фамилия - Кузнецов.
+      \item А это наши дети. Вот это моя дочь, Алина. Она ещё студентка.
+      \item Очень приятно. А это ваш сын?
+      \item Да, конечно, это мой сын, Валери.
+     \end{itemize}
+     \newpage
+
+     \subsection{Exercise 3}
+     \begin{enumerate}
+      \item Это мой дедушка. Его зовут Александр.
+      \item А вот это наши друзья. Их зовут Таня и Пётр.
+      \item Познакомьтесь, это моя внучка. Её зовут Аня.
+      \item Это ваши дети? Как их зовут? 
+      \item Посмотрите, это мой отец. Его зовут Артём.
+      \item Это твоя подруга? Как её зовут?
+     \end{enumerate}
+     \section{Section B}
+     \subsection{Excercise 1a}
+     \begin{enumerate}
+      \item Наталья живёт в 
+      \item Она - учительница
+      \item У неё есть муж. Его зовут Алексей.
+      \item У Натальи один брат.
+      \item Света - дочь Натальи.
+      \item Родители Натальи живут на севере города.
+     \end{enumerate}
+     \subsection{Exercise 1b}
+     \begin{itemize}
+       \item 1 $\rightarrow$ g
+       \item 2 $\rightarrow$ c
+       \item 3 $\rightarrow$ f
+       \item 4 $\rightarrow$ d
+       \item 5 $\rightarrow$ b
+       \item 6 $\rightarrow$ a
+       \item 7 $\rightarrow$ e
+       \item 8 $\rightarrow$ h
+     \end{itemize}
+     \subsection{Exercise 2}
+     \begin{enumerate}
+      \item У Антона есть брат.
+      \item У Кати нет сестра.
+      \item У Надежды есть дочь.
+      \item У Михаила нет сын.
+      \item У Лилии есть подруга.
+      \item У Алины нет друг.
+     \end{enumerate}
+    \subsection{Exercise 3}
+    \begin{enumerate}
+      \item У тебя есть жена (муж)?
+      \item У его есть дети? 
+      \item У её есть семья?
+      \item У Вас есть кошка?
+      \item У их есть друзья?
+    \end{enumerate}
+    \subsection{Exercise 4}
+    \begin{enumerate}
+      \item Нет, у меня нет брат.
+      \item Нет, у меня нет муж или жена.
+      \item Нет, у меня нет сын.
+      \item Нет, у меня нет дочь.
+      \item Нет, у меня нет внук.
+      \item Нет, у меня нет внучка.
+      \item Да, его зовут Герберт.
+      \item Да, его зовут Элизабет.
+    \end{enumerate}
+    \subsection{Exercise 5a}
+    \begin{itemize}
+      \item У Вадима есть один брат и одна сестры.
+      \item У Любы есть три внуки и одна внучка.
+      \item У Сергея есть четыре друга.
+      \item У Анастасии есть два сына. 
+      \item У Ивана есть одна дочь.
+      \item У Наталии есть два друга.
+    \end{itemize}
+\end{document}
