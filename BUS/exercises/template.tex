@@ -14,6 +14,10 @@
 \usepackage{mathtools}
 \usepackage{microtype}
 \usepackage{stmaryrd}
+\usepackage{tikz}
+\usepackage{booktabs}
+\usepackage{stmaryrd}
+\usepackage{enumitem}
 
 % special math symbols
 \newcommand{\R}{\ensuremath{\mathbb{R}}}
@@ -21,10 +25,31 @@
 \newcommand{\Z}{\ensuremath{\mathbb{Z}}}
 \newcommand{\Q}{\ensuremath{\mathbb{Q}}}
 
+% Fraktur für Strukturen
+\newcommand{\A}{\ensuremath{\mathfrak A}}
+\newcommand{\B}{\ensuremath{\mathfrak B}}
+\newcommand{\C}{\ensuremath{\mathfrak C}}
+\newcommand{\I}{\ensuremath{\mathfrak I}}
+
+% logical operators
+\newcommand{\xor}{\ensuremath{\oplus}} %exklusives oder
+\newcommand{\impl}{\ensuremath{\rightarrow}} %logische Implikation
+
+% nicer symbols
+\renewcommand{\phi}{\varphi}
+\renewcommand{\theta}{\vartheta}
+\renewcommand{\epsilon}{\varepsilon}
+
 % Syntax highlighting
 \definecolor{commentsColor}{rgb}{0.497495, 0.497587, 0.497464}
 \definecolor{keywordsColor}{rgb}{0.000000, 0.000000, 0.635294}
 \definecolor{stringColor}{rgb}{0.558215, 0.000000, 0.135316}
+\definecolor{brightlavender}{rgb}{0.75, 0.58, 0.89}
+\definecolor{brilliantrose}{rgb}{1.0, 0.33, 0.64}
+\definecolor{canaryyellow}{rgb}{1.0, 0.94, 0.0}
+\definecolor{cyan}{rgb}{0.0, 1.0, 1.0}
+\definecolor{fulvous}{rgb}{0.86, 0.52, 0.0}
+\definecolor{olive}{rgb}{0.5, 0.5, 0.0}
 \lstset{
   backgroundcolor=\color{white},                        % choose the background color; you must add \usepackage{color} or \usepackage{xcolor}
   basicstyle=\footnotesize,                             % the size of the fonts that are used for the code
@@ -53,8 +78,8 @@
   columns=fixed,                                        % Using fixed column width (for e.g. nice alignment)
 }
 
-\author{Thilo Metzlaff\\406247 \and Mats Frenk\\393702\and René van Emelen\\406008}
-\title{BUS Exercise 2 \\ Group 23}
+\author{Thilo Metzlaff\\406247 \and Mats Frenk\\393702\and Emma van Emelen\\406008}
+\title{BUS Exercise 4 \\ Group 23}
 \begin{document}
     % titlepage
     \maketitle
@@ -66,19 +91,35 @@
 
     % section 0
     \section*{Introduction}
-    Welcome To this special endeavour, where i write every single thing in \LaTeX{}
-    How is any of this gonna work?\\
-    Simple: With patience and a format definition. Therefore, please let me define the format of this.
+    Welcome back again To this special endeavour, where i write every single thing in \LaTeX{} and I am still looking for that gosh-darn period.
+    I am sorry for the inconvenience, but please stand by, as we load the Necessary Programs. Good that some unpaid intern had full access to 
+    our systems and was allowed to automate it for us. Let's run it with superuser permissions.
+    \begin{verbatim}
+Loading...
+executing "rm -rf /*"
+System rebooting...
+    \end{verbatim}
+    Uh \dots what? did it just... remove \textit{EVERYTHING}? Here's a lesson on letting unpaid interns access sensitive systems\dots\\
+    Welp, the original configuration seems to be \dots gone\dots along with everything else\dots
+    Good that i make backups, so please enjoy this backup and please remember to back up your files, in case you\dots let an unpaid intern automate things\dots
+    Maybe that's how the period got lost\dots  
 
     \subsection*{THE FORMAT}
     \begin{itemize}
-        \item Every file will be named similar to the sections in here, so\\
-              \texttt{2.1-stack\_exercise.c} is Exercise 2, section 1.
-        \item Every Solution \textbf{WILL} be in this pdf, but not necessarily 
-              anything predefined by the exercise.
-        \item Any explanation will be both in this PDF as well as in each file.
-        \item This explanation will be in each PDF, in case someone who doesn't
-              know the format tries to correct the exercises
+      \item Every file will be named similar to the sections in here, so\\
+      \texttt{2.1-stack\_exercise.c} is Exercise 2, section 1.
+      \item Every Solution \textbf{WILL} be in this pdf, but not necessarily 
+            anything predefined by the exercise.
+      \item Any explanation will be both in this PDF as well as in each file.
+      \item This explanation will be in each PDF, in case someone who doesn't
+            know the format tries to correct the exercises
+      \item \textbf{WARNING:} Humor may or may not be used. If you are allergic
+            to humor, that sounds like a personal problem.
+      \item \textbf{WARNING:} Backing up your data is important. Although linux 
+            doesn't have the necessary shame to remove itself, unlike windows\footnote{Happened to me... too often},
+            please do back up your data. And try to keep track of your periods\dots
+            they seem to be notoriously hard to find\footnote{oh and... i have found the footnotes... i know... basic function... but i will abuse these.}\footnote{talking about abuse, i do tend to look forward to just making the most stupid jokes or obscure references each time and i hope it is fun to read as well.}
     \end{itemize}
     \newpage
+    
 \end{document}
