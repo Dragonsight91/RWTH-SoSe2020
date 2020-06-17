@@ -92,7 +92,11 @@
     % section 0
     \section*{Introduction}
     Welcome back for another Excercise, with me writing every single thing in \LaTeX{}. I am happy to announce, that i have finally found the period that we were looking for.
-    I have also fired that unpaid intern that deleted all our data last time. 
+    I have also fired that unpaid intern that deleted all our data last time. It is currently 3.43 AM and i have procrastinated way too much... this seems to be my deserved punishment.
+    I must do this, for i have an obligation to do bullshit. There may be fewer jokes... i also made code examples on github\footnote{\url{https://github.com/Dragonsight91/Study-Courses-Note-collection/tree/master/BUS/exercises/5}}, even for the pseudocode stuff
+    (i did it in C... i don't like pseudocode), if you want, you can look at that if i remember to push before dying from sleep deprivation...\\
+    Welp, i am finally done, i can now die in pieces. Fun fact: i haven't watched a single one of the lectures. man pages, google and persistence. Takes less time than one might think. 
+
     
 
     \subsection*{THE FORMAT}
@@ -112,5 +116,119 @@
             they seem to be notoriously hard to find
     \end{itemize}
     \newpage
+    \section{Senpai Notice me}
+    That solution will not work. Why? Simple: One reporter signals twice.
+    This is like your parent telling you to do a thing, after they just told you, while you scheduled it. 
+    Suddenly you have to process another signal JUST to find out it's the same thing. 
+    In this case, it will just make one guy emulate another guy. Kinda weird... but it ain't gay because one said nohomo\footnote{SPOILER: it's still gay\dots}.\\
+    How do we fix it?\\
+    Remove one signal. That's it. Code should work now. Go and be free now, you deserve it.
+    
+    \section{I like trains}
+    \subsection{queues before sephora}
+    If you want a simple and boring answer, just look at the code below. if you want a working example in C i have an inofficial thing for you in the github repo mentioned earlier, but i digress. 
+    To solve this, we need a list, which we have. then we need two counting semaphores. one to prevent deletion, one to prevent adding.
+    Now we crosswire them, just like the royals used to do it, and we get THIS:
+    \begin{lstlisting}[language=c]
+int MAX_LEN = 10; the maximum length of the list
+sem_init(enqu, MAX_LEN) // initialize the insert blocking semaphore
+sem_init(dequ, 0)       // initialize the remove blocking semaphore
+sem_init(sync, 1)       // a synchronizer mutex
+
+void enqueue(element){
+      sem_wait(enqu); // can we insert AT ALL? if no, wait here
+
+      sem_wait(sync); // is someone using my toys? let's just... let them play.. we can always clean up later
+      queue.add(element); // add our element
+      sem_post(sync); // unlock write access again
+
+      sem_post(dequ); // grant UNLIMITED POWAH
+}
+
+element dequeue() {
+      sem_wait(dequ); // can we dequeue?
+
+      sem_wait(sync); // I HAVE THE HIGH GROUND
+      element out = queue.pop();
+      sem_post(sync) // DON'T UNDERESTIMATE MY POWER
+
+      sem_post(enqu); // AGATHE BAUAH
+}
+    \end{lstlisting}
+    \newpage
+    
+    \subsection{Escort(ing) services}
+
+    \begin{enumerate}
+          \item Processes are executed ASYRONONCHUSLY\footnote{fun adventures in human multithreading} Meaning that we have a read/write asynchonicity problem here.
+                Two guy tryna get the same girl but she just take's 'em both. Nothing wrong with that, but somehow neither of the guys know, and have the same outdated status.
+                In our case, we don't get busy. Let's say we have two cars that arrive at the same time. both will skip the busy loop and suddenly we have two cars on the platform.
+                Now, i don't know about you, but i haven't seen anyone stack cars recenmtly.
+          \item Another R/W asynchronicity problem. One car arrives but an amount of $n$ visitors arrives. all have a chance to skip the busy loop due to outdated information and suddenly we have an amount of $n$ visitors in $2$ seats.
+                I've seen clowns do that, they seem to be able to stack efficiently... but for anyone else, this tends to be a problem.
+    \end{enumerate}
+    \subsection{Need for Seat}
+    \begin{lstlisting}[language=c]
+sem_init(carQueue,1);  //Mutex to show if platform is available. 
+sem_init(passQueue,0); //Counter Semaphore for the passenger queue
+sem_init(seatAvail,0); //Counter Semaphore to check seat avalability. no seat = no car
+
+void AnkunftWagen(){
+
+      // wait for the platform to be available. Just how we do with shoes.
+      wait(carQueue);
+
+      fahreAufPlattform();
+      oeffneTueren();
+
+      // promise a "real bunny"
+      sem_post(seatAvail);
+      sem_post(seatAvail);
+
+      // wait for victims to get in van
+      sem_wait(passQueue);
+      sem_wait(passQueue);
+
+      schliesseTueren();
+      verlassePlattform();
+
+      // let ne
+      sem_post(carQueue);
+}
+
+void AnkunftBesucher(){
+      sem_wait(seatAvail); // wait for seats to be available. no seat = no car
+      betreteWagen();
+      sem_post(passQueue); // let the driver know you're inside
+}
+    \end{lstlisting}
+    \newpage
+
+    \subsection{Pascha 7th Floor}
+    We can add another semaphore that counts VIPs. If there's someone in there, we prioritize them.
+    If there aren't enough VIP, we fill the rest with peasants.
+    it can be done like this:
+    \begin{itemize}
+          \item get value of VIP semaphore
+          \item if >0, we add $n$ VIP to the car. then we we fill up with $2-n$ peasants.
+          \item otherwise we add 2 peasants.
+    \end{itemize}
+    \section{Eating out. waiiiit a minute...}
+    Since all explanations are in the comments, i will keep it short.
+    \begin{enumerate}
+          \item we need to add a synchronization mutex. only one person can write at a time.
+          \item since shared memory is being deregistered and properly marked for destruction, there's no need to care for that.
+          \item i wanted to implement zombie process handling, but i didn't. Daddy does not know about the death of his children.
+          \item we sync every time we read or write to/from shared memory. otherwise we get a gangbang problem (many try to access one resource. can work, can go wrong).
+          \item i only use an 8-bit integer for the waiter's run flag, because i only need 1 or 0.
+          \item \texttt{masks} is a zero initialized semaphore. No one has a mask.
+          \item \texttt{insert\_unnecessarily\_long\_free\_space\_variable\_name}\footnote{\texttt{free\_space\_inside}, could be shortened to fSpace} is initialized to \texttt{MAX\_CUSTOMERS} it holds the amount of free space
+          \item It is now \texttt{5.15AM} sleep is overrated, i'm a programmer.
+          \item the waiter only gives anyone a mask, if there are enough people in the queue. otherwise we randomly give masks to no one, which sometimes creates weird problems.
+          \item Customers are first invited to the restaurant and only then do they wait to get a mask. suboptimal, but masks can be available, as long as there are people in the queue.
+          \item i don't know why, but i decided to just do te most annoying thing and put an lstlisting with all the code on the next.. few pages.... it's the exact same thing as the code file.
+    \end{enumerate}
+    \newpage
+    \lstinputlisting[language=c]{3-eating_out.c}
     
 \end{document}
