@@ -20,6 +20,7 @@
 \usepackage{enumitem}
 \usepackage{multirow}
 
+
 % special math symbols
 \newcommand{\R}{\ensuremath{\mathbb{R}}}
 \newcommand{\N}{\ensuremath{\mathbb{N}}}
@@ -88,7 +89,7 @@
     \section*{Introduction}
     Do i welcome you again or do we know each other well enough by this point? Welp, whatever it is, today's exercise is about fitting big things into small spaces and vice versa.
     A topic we all understand. After all, we have access to the internet. As long as you don't try to square a circle, try to make a sphere fall over or solve $P=NP$, all is well.
-    This sentence is a Lie.  
+    This sentence is a Lie. But please appreciate my 5AM tikz trees... they were more work than i expected\footnote{i hope no period is missing this time\dots}... 
 
     \subsection*{THE FORMAT}
     \begin{itemize}
@@ -245,6 +246,334 @@ To calculate the total size of available memory, we can just add the size of eac
   \mbox{then: } S_{total} =&\mbox{ } \sum_{n=1}^{|S|} x_i\\
   \Leftrightarrow S_{total} =&\mbox{ } 1938
 \end{align}
-Therefore the size of all 
+But size doesn't matter, right? 
 
-\end{document}t
+\subsection{l o g i c}
+\begin{enumerate}
+  \item 1895 $\rightarrow$ (2,0)
+  \item 1575 $\rightarrow$ (3,175)
+  \item 1935 $\rightarrow$ (2,40)
+  \item 1050 $\rightarrow$ (0,999)
+  \item 4444 $\rightarrow$ (5,44)
+  \item 1894 $\rightarrow$ (1,44) 
+\end{enumerate}
+\newpage
+
+\section{Tell a friend}
+\fcolorbox{black}{red}{\rule{0pt}{6pt}\rule{6pt}{0pt}}\quad occupied\\
+\fcolorbox{black}{green}{\rule{0pt}{6pt}\rule{6pt}{0pt}}\quad shared
+
+\subsubsection{Tree 1}
+\begin{figure*}[h]
+  \centering
+  \begin{tikzpicture}[->,>=stealth,shorten >=2pt,auto,node distance=.5cm,
+    scale = 1.1,transform shape, every node/.style={draw=black},baseline]
+        \node[rectangle,style={fill=green}] (root) {$32$} 
+        child {
+          node[rectangle,style={fill=green}] {16}
+          child {
+            node[rectangle,style={fill=green}] {8}
+            child {
+              node[rectangle,style={fill=green}] {4}
+              child {
+                node[rectangle,style={fill=green}] {2}
+                child {
+                  node[rectangle,style={fill=red},text width=1cm,align=center] {1\\A:1}
+                }
+                child {
+                  node {1}
+                }
+              }
+              child {
+                node {2}
+              }
+            }
+            child {
+              node {4}
+            }
+          }
+          child {
+            node {8}
+          }
+        }
+        child {
+          node {16}
+        } ;
+    
+  \end{tikzpicture}
+\end{figure*}
+\subsubsection{Tree 2}
+\begin{figure*}[h]
+  \centering
+  \begin{tikzpicture}[->,>=stealth,shorten >=2pt,auto,node distance=3.5cm,
+    scale = 1.1,transform shape, every node/.style={draw=black},baseline]
+        \node[rectangle,style={fill=green}] (root) {$32$} 
+        child {
+          node[rectangle,style={fill=green}] {16}
+          child {
+            node[rectangle,style={fill=green}] {8}
+            child {
+              node[rectangle,style={fill=green}] {4}
+              child {
+                node[rectangle,style={fill=green}] {2}
+                child {
+                  node[rectangle,style={fill=red},text width=1cm,align=center] {1\\A:1}
+                }
+                child {
+                  node {1}
+                }
+              }
+              child {
+                node[rectangle,style={fill=red},text width=1cm,align=center] {2\\B:2}
+              }
+            }
+            child {
+              node {4}
+            }
+          }
+          child {
+            node {8}
+          }
+        }
+        child {
+          node {16}
+        } ;
+    
+  \end{tikzpicture}
+\end{figure*}
+\newpage
+\subsubsection{TREE(3)}
+\begin{figure*}[h]
+  \centering
+  \begin{tikzpicture}[->,>=stealth,shorten >=2pt,auto,node distance=3.5cm,
+    scale = 1.1,transform shape, every node/.style={draw=black},baseline]
+        \node[rectangle,style={fill=green}] (root) {$32$} 
+        child {
+          node[rectangle,style={fill=green}] {16}
+          child {
+            node[rectangle,style={fill=green}] {8}
+            child {
+              node[rectangle,style={fill=green}] {4}
+              child{
+                node {2}
+              }
+              child {
+                node[rectangle,style={fill=red},text width=1cm,align=center] {2\\B:2}
+              }
+            }
+            child {
+              node {4}
+            }
+          }
+          child {
+            node {8}
+          }
+        }
+        child {
+          node {16}
+        } ;
+    
+  \end{tikzpicture}
+\end{figure*}
+\subsubsection{Tree 4}
+\begin{figure*}[h]
+  \centering
+  \begin{tikzpicture}[->,>=stealth,shorten >=2pt,auto,node distance=3.5cm,
+    scale = 1.1,transform shape, every node/.style={draw=black},baseline]
+        \node[rectangle,style={fill=green}] (root) {$32$} 
+        child {
+          node[rectangle,style={fill=green}] {16}
+          child {
+            node[rectangle,style={fill=green}] {8}
+            child {
+              node[rectangle,style={fill=green}] {4}
+              child {
+                node {2}
+              }
+              child {
+                node[rectangle,style={fill=red},text width=1cm,align=center] {2\\B:2}
+              }
+            }
+            child {
+              node {4}
+            }
+          }
+          child {
+            node {8}
+          }
+        }
+        child {
+          node [rectangle,style={fill=red},text width=1cm,align=center] {16\\C:11}
+        } ;
+    
+  \end{tikzpicture}
+\end{figure*}
+\newpage
+\subsubsection{Tree 5}
+\begin{figure*}[h]
+  \centering
+  \begin{tikzpicture}[->,>=stealth,shorten >=2pt,auto,node distance=.5cm,
+    scale = 1.1,transform shape, every node/.style={draw=black},baseline]
+        \node[rectangle,style={fill=green}] (root) {$32$} 
+        child {
+          node[rectangle,style={fill=green}] {16}
+          child {
+            node[rectangle,style={fill=green}] {8}
+            child {
+              node[rectangle,style={fill=green}] {4}
+              child {
+                node {2}
+              }
+              child {
+                node[rectangle,style={fill=red},text width=1cm,align=center] {2\\B:2}
+              }
+            }
+            child {
+              node {4}
+            }
+          }
+          child {
+            node {8}
+          }
+        }
+        child {
+          node [rectangle,style={fill=red},text width=1cm,align=center] {16\\C:11}
+        } ;
+    
+  \end{tikzpicture}
+\end{figure*}
+\subsubsection{Tree 6}
+\begin{figure*}[h]
+  \centering
+  \begin{tikzpicture}[->,>=stealth,shorten >=2pt,auto,node distance=3.5cm,
+    scale = 1.1,transform shape, every node/.style={draw=black},baseline]
+        \node[rectangle,style={fill=green}] (root) {$32$} 
+        child {
+          node[rectangle,style={fill=green}] {16}
+          child {
+            node[rectangle,style={fill=green}] {8}
+            child {
+              node[rectangle,style={fill=green}] {4}
+              child {
+                node {2}
+              }
+              child {
+                node[rectangle,style={fill=red},text width=1cm,align=center] {2\\B:2}
+              }
+            }
+            child {
+              node {4}
+            }
+          }
+          child {
+            node [rectangle,style={fill=red},text width=1cm,align=center] {8\\D:5}
+          }
+        }
+        child {
+          node [rectangle,style={fill=red},text width=1cm,align=center] {16\\C:11}
+        } ;
+    
+  \end{tikzpicture}
+\end{figure*}
+\newpage
+\subsubsection{Tree 6}
+\begin{figure*}[h]
+  \centering
+  \begin{tikzpicture}[->,>=stealth,shorten >=2pt,auto,node distance=3.5cm,
+    scale = 1.1,transform shape, every node/.style={draw=black},baseline]
+        \node[rectangle,style={fill=green}] (root) {$32$} 
+        child {
+          node[rectangle,style={fill=green}] {16}
+          child {
+            node[rectangle,style={fill=green}] {8}
+            child {
+              node[rectangle,style={fill=green}] {4}
+              child {
+                node {2}
+              }
+              child {
+                node[rectangle,style={fill=red},text width=1cm,align=center] {2\\B:2}
+              }
+            }
+            child {
+              node [rectangle,style={fill=red},text width=1cm,align=center] {4\\E:3}
+            }
+          }
+          child {
+            node [rectangle,style={fill=red},text width=1cm,align=center] {8\\D:5}
+          }
+        }
+        child {
+          node {16}
+        } ;
+    
+  \end{tikzpicture}
+\end{figure*}
+\subsubsection{Tree 8}
+\begin{figure*}[h]
+  \centering
+  \begin{tikzpicture}[->,>=stealth,shorten >=2pt,auto,level 1/.style={sibling distance=30mm}, level 2/.style={sibling distance=15mm},
+    scale = 1.5,transform shape, every node/.style={draw=black},baseline]
+        \node[rectangle,style={fill=green}] (root) {$32$} 
+        child {
+          node[rectangle,style={fill=green}] {16}
+          child {
+            node[rectangle,style={fill=green}] {8}
+            child {
+              node[rectangle,style={fill=green}] {4}
+              child {
+                node {2}
+              }
+              child {
+                node[rectangle,style={fill=red},text width=1cm,align=center] {2\\B:2}
+              }
+            }
+            child {
+              node [rectangle,style={fill=red},text width=1cm,align=center] {4\\E:3}
+            }
+          }
+          child {
+            node [rectangle,style={fill=red},text width=1cm,align=center] {8\\D:5}
+          }
+        }
+        child {
+          node [rectangle,style={fill=green}] {16}
+          child {
+            node[rectangle,style={fill=red},text width=1cm,align=center] {8\\F:7}
+          }
+          child{
+            node {8}
+          }
+        } ;
+    
+  \end{tikzpicture}
+\end{figure*}
+\subsection{Fragmented memory}
+We can allocate at most 8 GB and we lose 5GB due to internal fragmentation.
+\newpage\subsection{More Trees}
+\begin{figure}[h]
+  \includegraphics[scale=.7]{one_note_screen.png}
+  \caption{since i could not be bothered to make more trees, have a screensot}
+\end{figure}
+\subsection{More Fragmented memory}
+Largest possible memory allocation is 4GB. We lose 3GB of memory due to internal ffragmentation.
+\newpage
+\section{The End...}
+\subsection{Memory Paging}
+\subsubsection{This could be YOUR title}
+\begin{align}
+  4\mbox{ KiB} =&\mbox{ } 4096 \mbox{Byte}\\
+  \frac{2^{32}}{4096} =&\mbox{ } 1048576 \mbox{ Entries}
+\end{align}
+\subsubsection[This should be MY title]{This should be MY title \footnote{but i'm out of time and creativity, it's 5AM and i underestimated how long it would take me to tex this...}}
+\begin{align}
+  n^2=&\mbox{ } 2^{20}\\
+  \Rightarrow n=&\mbox{ } 2^{10}\\
+  \Rightarrow n=&\mbox{ } 1024
+\end{align}
+\subsubsection[THIS IS OUR TITLE]{THIS IS OUR TITLE\footnote{*Soviet anthem starts playing*}}
+\begin{itemize}[leftmargin=\parindent+1in]
+  \item[disadvantage:] The longer time complexity due to address calculations. Every stage adds more overhead to calculate the address. 
+  \item[advantage:] Not all pages are loaded to memory, which lowers memory complexity SIGNIFICANTLY.
+\end{itemize}
+\end{document}
