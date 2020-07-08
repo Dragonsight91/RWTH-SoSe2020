@@ -1,0 +1,45 @@
+\documentclass[a4paper, 11pt]{article}
+\usepackage[a4paper,left=2cm,right=2cm,top=3.5cm,bottom=2cm,headheight=1.5cm,textheight=24cm]{geometry}
+\usepackage{tikz}
+
+\begin{document}
+
+\begin{center}
+\begin{tabular}{|r||r|r|}\hline
+$m$ & PF & $L(m)$\\\hline\hline
+1 &  & \\\hline
+2 & 16 & \\\hline
+3 & 13 & \\\hline
+4 & 7 & \\\hline
+5 &  & \\\hline
+6 &  & \\\hline
+7 &  & \\\hline
+8 &  & \\\hline
+\end{tabular}
+\end{center}
+
+
+\begin{center}
+  \begin{tikzpicture}
+    \def\xsize{8}
+    \def\ysize{6}
+    \draw[thin, dotted] (0,0) grid (\xsize,\ysize);
+    \foreach \x in {1,2,...,\xsize}
+      \node at (\x, -0.5) {$\x$};
+    \foreach \y in {1,2,...,\ysize}
+      \node at (-0.5, \y) {$\y$};
+      
+    \node (xlabel) at (\xsize + 0.5,0) {$m$};
+    \draw[->] (0,0) -- (xlabel);
+    \node (ylabel) at (0,\ysize + 0.5) {$L(m)$};
+    \draw[->] (0,0) -- (ylabel);
+    % Beispiel Punkt:
+    %\node at (2,3)[circle,fill,inner sep=1.5pt]{};
+    
+    % Beispiel Gerade durch Punkt:
+    %\draw[shorten >=-3cm] (0,1) -- (2,3);
+
+  \end{tikzpicture}
+\end{center}
+
+\end{document}
