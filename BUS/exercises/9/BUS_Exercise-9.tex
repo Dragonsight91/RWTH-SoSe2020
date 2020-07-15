@@ -1,0 +1,262 @@
+% general format definition
+\documentclass[a4paper, 11pt]{article}
+\usepackage[margin=.9in]{geometry}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[english]{babel}
+
+% extra packages
+\usepackage{hyperref}
+\usepackage{listings}
+\usepackage{color}
+\usepackage{amssymb}
+\usepackage{amsmath}
+\usepackage{mathtools}
+\usepackage{microtype}
+\usepackage{stmaryrd}
+\usepackage{tikz}
+\usepackage{booktabs}
+\usepackage{stmaryrd}
+\usepackage{enumitem}
+
+% special math symbols
+\newcommand{\R}{\ensuremath{\mathbb{R}}}
+\newcommand{\N}{\ensuremath{\mathbb{N}}}
+\newcommand{\Z}{\ensuremath{\mathbb{Z}}}
+\newcommand{\Q}{\ensuremath{\mathbb{Q}}}
+
+% Fraktur für Strukturen
+\newcommand{\A}{\ensuremath{\mathfrak A}}
+\newcommand{\B}{\ensuremath{\mathfrak B}}
+\newcommand{\C}{\ensuremath{\mathfrak C}}
+\newcommand{\I}{\ensuremath{\mathfrak I}}
+
+% logical operators
+\newcommand{\xor}{\ensuremath{\oplus}} %exklusives oder
+\newcommand{\impl}{\ensuremath{\rightarrow}} %logische Implikation
+
+% nicer symbols
+\renewcommand{\phi}{\varphi}
+\renewcommand{\theta}{\vartheta}
+\renewcommand{\epsilon}{\varepsilon}
+
+% Syntax highlighting
+\definecolor{commentsColor}{rgb}{0.497495, 0.497587, 0.497464}
+\definecolor{keywordsColor}{rgb}{0.000000, 0.000000, 0.635294}
+\definecolor{stringColor}{rgb}{0.558215, 0.000000, 0.135316}
+\definecolor{brightlavender}{rgb}{0.75, 0.58, 0.89}
+\definecolor{brilliantrose}{rgb}{1.0, 0.33, 0.64}
+\definecolor{canaryyellow}{rgb}{1.0, 0.94, 0.0}
+\definecolor{cyan}{rgb}{0.0, 1.0, 1.0}
+\definecolor{fulvous}{rgb}{0.86, 0.52, 0.0}
+\definecolor{olive}{rgb}{0.5, 0.5, 0.0}
+\lstset{
+  backgroundcolor=\color{white},                        % choose the background color; you must add \usepackage{color} or \usepackage{xcolor}
+  basicstyle=\footnotesize,                             % the size of the fonts that are used for the code
+  breakatwhitespace=false,                              % sets if automatic breaks should only happen at whitespace
+  breaklines=true,                                      % sets automatic line breaking
+  captionpos=b,                                         % sets the caption-position to bottom
+  commentstyle=\color{commentsColor}\textit,            % comment style
+  deletekeywords={},                                    % if you want to delete keywords from the given language
+  escapeinside={\%*}{*)},                               % if you want to add LaTeX within your code
+  extendedchars=true,                                   % lets you use non-ASCII characters; for 8-bits encodings only, does not work with UTF-8
+  frame=tb,	                   	                        % adds a frame around the code
+  keepspaces=true,                                      % keeps spaces in text, useful for keeping indentation of code (possibly needs columns=flexible)
+  keywordstyle=\color{keywordsColor}\bfseries,          % keyword style
+  otherkeywords={True,False,true,false,null,None,NULL}, % if you want to add more keywords to the set
+  numbers=left,                                         % where to put the line-numbers; possible values are (none, left, right)
+  numbersep=5pt,                                        % how far the line-numbers are from the code
+  numberstyle=\tiny\color{commentsColor},               % the style that is used for the line-numbers
+  rulecolor=\color{black},                              % if not set, the frame-color may be changed on line-breaks within not-black text (e.g. comments (green here))
+  showspaces=false,                                     % show spaces everywhere adding particular underscores; it overrides 'showstringspaces'
+  showstringspaces=false,                               % underline spaces within strings only
+  showtabs=false,                                       % show tabs within strings adding particular underscores
+  stepnumber=1,                                         % the step between two line-numbers. If it's 1, each line will be numbered
+  stringstyle=\color{stringColor},                      % string literal style
+  tabsize=2,	                                          % sets default tabsize to 2 spaces
+  title=\lstname,                                       % show the filename of files included with \lstinputlisting; also try caption instead of title
+  columns=fixed,                                        % Using fixed column width (for e.g. nice alignment)
+}
+
+\author{Thilo Metzlaff\\406247 \and Mats Frenk\\393702\and Emma van Emelen\\406008}
+\title{BUS Exercise 8 \\ Group 23}
+\begin{document}
+    % titlepage
+    \maketitle
+    \newpage
+
+    % contents
+    \tableofcontents
+    \newpage
+
+    % section 0
+    \section*{Introduction}
+    Welcome To the Jungle, we've got fun and games. Well actually we have hash-browns with laxatives for shits 'n giggles, just be careful.
+    Please enjoy this, which i believe to be the last installment in this short running series. I hope it was entertaining, especially the Low-Effort versions.
+    I hope all periods are in place\footnote{unless it is that kind of period... i hope you don't have that today, otherwise, get well soon.}, if so, then let us begin. 
+    
+
+    \subsection*{THE FORMAT}
+    \begin{itemize}
+      \item Every file will be named similar to the sections in here, so\\
+      \texttt{2.1-stack\_exercise.c} is Exercise 2, section 1.
+      \item Every Solution \textbf{WILL} be in this pdf, but not necessarily 
+            anything predefined by the exercise.
+      \item Any explanation will be both in this PDF as well as in each file.
+      \item This explanation will be in each PDF, in case someone who doesn't
+            know the format tries to correct the exercises
+      \item \textbf{WARNING:} Humor may or may not be used. If you are allergic
+            to humor, that sounds like a personal problem.
+      \item \textbf{WARNING:} Backing up your data is important. Although linux 
+            doesn't have the necessary shame to remove itself, unlike windows,
+            please do back up your data. And try to keep track of your periods\dots
+            they seem to be notoriously hard to find
+    \end{itemize}
+    \newpage
+
+    \section{The accountant's Nightmare}
+    \subsection{M E T H S.... or maths... whatever}
+    $12 + 256 + 256^2 +256^3 = 16843020$ [Blöcke] \\\\
+    
+    We have a maximum file size of 16843020 KiB. We have 12 directly addressed blocks, 256 which use indirect addresses $256^2$ blocks that use double indirect addressing and $256^3$ which use triple indirect addressing.\\
+    By doubling the blocksize, we double the maximum filesize, because the amount of addressable data-blocks are constant.
+
+    \subsection{Blocks and blocks and blocks...}
+    We start inside of the root-directory block and look for the directory entry of \texttt{home}
+    This entry links to the associated I-Node, in which the next directory-block is specified by addressing. 
+    This then lists all files inside of the \texttt{home} directory. now we look for the \texttt{bus} directory and its I-Node will be called and the directory block, that belongs to it, will be addressed, which ten holds all entries within \texttt{home/bus/}.
+    Here we look for an entry of the \texttt{test} directory, which links to the associated inode.
+    If test is not a directory, but a file, then this I-Node adresses to the file-block of \texttt{est}, otherwise, it links to the associated directory-block.
+    \newpage
+    \section{Apple iNode}
+    \subsection{iNode tables}
+    \subsubsection{}
+        \begin{table}[h!]
+            \begin{tabular}{|l|l|l|}
+            \hline
+            I-Node: 368   & Type: Directory  & HL Count: 1 \\ \hline
+            \multicolumn{2}{|l|}{Inode 370} & "test"      \\ \hline
+            \multicolumn{2}{|l|}{Inode 999} & "test2"     \\ \hline
+            \end{tabular}
+            \end{table}
+            \begin{table}[h!]
+                \begin{tabular}{|l|l|l|}
+                \hline
+                I-Node: 999 & Type: Symbolic Link & HL Count: 1 \\ \hline
+                \multicolumn{3}{|l|}{"/home/bus/test"}         \\ \hline
+                \end{tabular}
+                \end{table}
+        \subsubsection{}
+        \begin{table}[h!]
+            \begin{tabular}{|l|l|l|}
+            \hline
+            I-Node: 368   & Type: Directory  & HL Count: 1 \\ \hline
+            \multicolumn{2}{|l|}{Inode 370} & "test"      \\ \hline
+            \multicolumn{2}{|l|}{Inode 999} & "test2"     \\ \hline
+            \multicolumn{2}{|l|}{Inode 370} & "test3"     \\ \hline
+            \end{tabular}
+            \end{table}
+            \begin{table}[h!]
+                \begin{tabular}{|l|l|l|}
+                \hline
+                I-Node: 370 & Type: File & HL Count: 2 \\ \hline
+                \multicolumn{3}{|l|}{"Lorem ipsum"}         \\ \hline
+                \end{tabular}
+                \end{table}
+        \subsubsection{}
+        \begin{table}[h!]
+            \begin{tabular}{|l|l|l|}
+            \hline
+            I-Node: 368   & Type: Directory  & HL Count: 1 \\ \hline
+            \multicolumn{2}{|l|}{Inode 999} & "test2"      \\ \hline
+            \multicolumn{2}{|l|}{Inode 370} & "test3"     \\ \hline
+            \end{tabular}
+            \end{table}
+            \begin{table}[h!]
+                \begin{tabular}{|l|l|l|}
+                \hline
+                I-Node: 370 & Type: File & HL Count: 1 \\ \hline
+                \multicolumn{3}{|l|}{"Lorem ipsum"}         \\ \hline
+                \end{tabular}
+                \end{table}
+        \subsubsection{}
+        \begin{table}[h!]
+            \begin{tabular}{|l|l|l|}
+            \hline
+            I-Node: 368   & Type: Directory  & HL Count: 1 \\ \hline
+            \multicolumn{2}{|l|}{Inode 1005} & "test"      \\ \hline
+            \multicolumn{2}{|l|}{Inode 999} & "test2"     \\ \hline
+            \multicolumn{2}{|l|}{Inode 370} & "test3"     \\ \hline
+            \end{tabular}
+            \end{table}
+            \begin{table}[h!]
+                \begin{tabular}{|l|l|l|}
+                \hline
+                I-Node: 1005 & Type: File & HL Count: 1 \\ \hline
+                \multicolumn{3}{|l|}{"Dolor sit amet"}         \\ \hline
+                \end{tabular}
+                \end{table}
+
+        \subsection{b}
+        \begin{enumerate}
+            \item[1.] Lorem ipsum
+            \item[2.] Lorem ipsum
+            \item[3.] \texttt{cat: test2: No such file or directory}
+            \item[4.] Dolor sit amet
+        \end{enumerate}
+        \section{IO-system}
+        \subsection[Pontroller Vs. Crocessor]{Pontroller Vs. Crocessor\footnote{this was actually a typo... i just left it in because why not}}
+        Pros: \\
+        \begin{itemize}
+            \item I/O-controllers are only accesed via read/write commands which directly interface with the registers of the controller
+            \item cheaper than seperate processors
+            \item can use checksums for error correction (this is limited on I/O-processors)
+        \end{itemize}
+        Cons: \\
+        \begin{itemize}
+            \item less performance than a seperate I/O-processor
+            \item only single commands can be executed, no command sequences
+            \item they use the same databus 
+        \end{itemize}
+        \subsection{}
+        Due to interrupt handling, the CPU doesn't block, while the data is being retreived. Instead the DMA acts 
+        independent from the CPU but gets its initial commands from the CPU directly, after which the CPU continues with its other tasks, until the DMA sends an interrupt, if it is done.
+        \newpage
+        \section{Frisbee planning}
+        \subsection{FCFS}
+        Order: \\
+        4882, 1271, 433, 3492, 2372, 1121, 3232, 3493, 4978, 6700\\\\
+        Total Distance: \\
+        4449 + 3059 + 2371 + 5579 = 15458
+        \subsection{SSTF}
+        Order:\\
+        4882, 4978, 3493, 3492, 3232, 2372, 1271, 1121, 433, 6700 \\\\
+        Total Distance:\\
+        96 + 4545 + 6267 = 10908
+        \subsection{SCAN}
+        Order: \\
+        4882, 4978, 6700, (6999), 3493, 3492, 3232, 2372, 1271, 1121, 433 \\\\
+        Total Distance: \\
+        2117 + 6566 = 8683
+        \subsection{LOOK}
+        Order: \\
+        4882, 4978, 6700, 3493, 3492, 3232, 2372, 1271, 1121, 433 \\\\
+        Total Distance: \\
+        1818 + 6267 = 8085
+        \newpage
+        \subsection{C-SCAN}
+        Order: \\
+        4882, 4978, 6700, (6999), (0), 433, 1121, 1271, 2372, 3232, 3492, 3493 \\\\
+        Total Distance: \\
+        2117 + 7000 + 3493 =12610
+        \subsection{C-LOOK}
+        Order: \\
+        4882, 4978, 6700, 433, 1121, 1271, 2372, 3232, 3492, 3493 \\\\
+        Total Distance: \\
+        1818 + 6267 + 3060 = 11145
+        \subsection{NOOP}
+        Order: \\
+        4882, 1271, 433, 3492, 3493, 2372, 1121, 3232, 4978, 6700 \\\\
+        Total Distance: \\
+        4449 + 3060 + 2372 + 5579 = 15460
+\end{document}
