@@ -1,0 +1,173 @@
+% general format definition
+\documentclass[a4paper, 11pt]{article}
+\usepackage[margin=.9in]{geometry}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[english]{babel}
+
+% extra packages
+\usepackage{hyperref}
+\usepackage{listings}
+\usepackage{color}
+\usepackage{amssymb}
+\usepackage{amsmath}
+\usepackage{mathtools}
+\usepackage{microtype}
+\usepackage{stmaryrd}
+\usepackage{tikz}
+\usepackage{booktabs}
+\usepackage{stmaryrd}
+\usepackage{enumitem}
+\usepackage{multirow}
+
+
+% special math symbols
+\newcommand{\R}{\ensuremath{\mathbb{R}}}
+\newcommand{\N}{\ensuremath{\mathbb{N}}}
+\newcommand{\Z}{\ensuremath{\mathbb{Z}}}
+\newcommand{\Q}{\ensuremath{\mathbb{Q}}}
+
+% logical operators
+\newcommand{\xor}{\ensuremath{\oplus}} %exklusives oder
+\newcommand{\impl}{\ensuremath{\rightarrow}} %logische Implikation
+
+% nicer symbols
+\renewcommand{\phi}{\varphi}
+\renewcommand{\theta}{\vartheta}
+\renewcommand{\epsilon}{\varepsilon}
+
+% Syntax highlighting
+\definecolor{commentsColor}{rgb}{0.497495, 0.497587, 0.497464}
+\definecolor{keywordsColor}{rgb}{0.000000, 0.000000, 0.635294}
+\definecolor{stringColor}{rgb}{0.558215, 0.000000, 0.135316}
+\definecolor{brightlavender}{rgb}{0.75, 0.58, 0.89}
+\definecolor{brilliantrose}{rgb}{1.0, 0.33, 0.64}
+\definecolor{canaryyellow}{rgb}{1.0, 0.94, 0.0}
+\definecolor{cyan}{rgb}{0.0, 1.0, 1.0}
+\definecolor{fulvous}{rgb}{0.86, 0.52, 0.0}
+\definecolor{olive}{rgb}{0.5, 0.5, 0.0}
+\lstset{
+  backgroundcolor=\color{white},                        % choose the background color; you must add \usepackage{color} or \usepackage{xcolor}
+  basicstyle=\footnotesize,                             % the size of the fonts that are used for the code
+  breakatwhitespace=false,                              % sets if automatic breaks should only happen at whitespace
+  breaklines=true,                                      % sets automatic line breaking
+  captionpos=b,                                         % sets the caption-position to bottom
+  commentstyle=\color{commentsColor}\textit,            % comment style
+  deletekeywords={},                                    % if you want to delete keywords from the given language
+  escapeinside={\%*}{*)},                               % if you want to add LaTeX within your code
+  extendedchars=true,                                   % lets you use non-ASCII characters; for 8-bits encodings only, does not work with UTF-8
+  frame=tb,	                   	                        % adds a frame around the code
+  keepspaces=true,                                      % keeps spaces in text, useful for keeping indentation of code (possibly needs columns=flexible)
+  keywordstyle=\color{keywordsColor}\bfseries,          % keyword style
+  otherkeywords={True,False,true,false,null,None,NULL}, % if you want to add more keywords to the set
+  numbers=left,                                         % where to put the line-numbers; possible values are (none, left, right)
+  numbersep=5pt,                                        % how far the line-numbers are from the code
+  numberstyle=\tiny\color{commentsColor},               % the style that is used for the line-numbers
+  rulecolor=\color{black},                              % if not set, the frame-color may be changed on line-breaks within not-black text (e.g. comments (green here))
+  showspaces=false,                                     % show spaces everywhere adding particular underscores; it overrides 'showstringspaces'
+  showstringspaces=false,                               % underline spaces within strings only
+  showtabs=false,                                       % show tabs within strings adding particular underscores
+  stepnumber=1,                                         % the step between two line-numbers. If it's 1, each line will be numbered
+  stringstyle=\color{stringColor},                      % string literal style
+  tabsize=2,	                                          % sets default tabsize to 2 spaces
+  title=\lstname,                                       % show the filename of files included with \lstinputlisting; also try caption instead of title
+  columns=fixed,                                        % Using fixed column width (for e.g. nice alignment)
+}
+
+\author{Thilo Metzlaff\\406247 \and Mats Frenk\\393702\and Emma van Emelen\\406008}
+\title{BUS Exercise 8 \\ Group 23}
+\begin{document}
+    % titlepage
+    \maketitle
+    \newpage
+
+    % contents
+    \tableofcontents
+    \newpage
+
+    % section 0
+    \section*{Introduction}
+    And again i have the wonderful task of doing this. Somehow i wasted way too much time again. 
+
+    \subsection*{THE FORMAT}
+    \begin{itemize}
+      \item Every file will be named similar to the sections in here, so\\
+      \texttt{2.1-stack\_exercise.c} is Exercise 2, section 1.
+      \item Every Solution \textbf{WILL} be in this pdf, but not necessarily 
+            anything predefined by the exercise.
+      \item Anysegmentxtbf{WARNING:} Humor may or may not be used. If you are allergic
+            to humor, that sounds like a personal problem.
+      \item \textbf{WARNING:} Backing up your data is important. Although linux 
+            doesn't have the necessary shame to remove itself, unlike windows\footnote{Happened to me... too often},
+            please do back up your data. And try to keep track of your periods\dots
+            they seem to be notoriously hard to find
+    \end{itemize}
+    \newpage
+    
+    \section{Memory management}
+    \subsection{Shared memory}
+    Let's say we request a memory block of length n. in this case, we get a pointer to that address which also has the data about its own length. Now, let's say this block is fragmented, then we get a page file. 
+    This pake file would then hold the amount of blocks needed as well as their exact locations in memory. Since we work with memory pointers, and the pointers must point to the exact same place, they should logically use the same page file.
+    Otherwise we would populate our memory with a bunch of duplicate data, which would be inefficient in both time (memory access latency) and space. Therefore the processes probably use the same logical addresses.
+    
+    \subsection{Page Marking}
+    If pages have to be swapped, we can see which page has meen modified. This way we don't have to check for changes, but rather we can see if something has been modified and then reload without checking the whole data set.
+
+    \subsection{Copy-on-Write}
+    This saves on processing time, since the child only gets things from daddy, if it tries to write to that block of memory.
+
+    \subsection{Error handling?}
+    This would only need more processing time with only a marginal improvement, since the Algorithms tend to be more complicated and are more about making educated guesses, than the errors are.
+    Error handling of this kind should only be implemented if it is truly critical that everything is absolutely correct . 
+    
+    \section{Demand Paging}
+    \setlength{\tabcolsep}{3.5mm}
+      \renewcommand{\arraystretch}{1.2}
+      \begin{center}
+      \begin{tabular}{|r||r|r|r|r|r|r|r|r|r|r|r|r|r|r|r|}
+      \multicolumn{16}{l}{\textbf{Strategie: FIFO}}\\
+      \hline
+            Referenz $\omega$ & 0 & 1 & 2 & 3 & 2 & 4 & 5 & 2 & 6 & 3 & 4 & 7 & 8 & 7 & 8 \\
+      \hline\hline
+            Rahmen 1    & 0  & 0  &0   & 0  & 0  & 4  & 4  &  4 & 4  & 4  & 4  & 4  & 8  & 8  & 8  \\\hline
+            Rahmen 2    &    &  1 &  1 &  1 & 1  & 1  & 5  &  5 & 5  &5   & 5  & 5  & 5  & 5  & 5  \\\hline
+            Rahmen 3    &    &    &  2 &  2 & 2  & 2  & 2  & 2  & 6  & 6  & 6  & 6  & 6  & 6  & 6  \\\hline
+            Rahmen 4    &    &    &    &  3 &  3 & 3  & 3  & 3  & 3  & 3  & 3  & 7  & 7  & 7  & 7  \\
+      \hline\hline
+            Priorität 1 & 0  & 1  & 2  & 3  & 3  & 4  & 5  & 5  & 6  & 6  & 6  & 7  & 8  & 8  & 8  \\\hline
+            Priorität 2 &    & 0  & 1  & 2  & 2  &  3 & 4  & 4  & 5  & 5  & 5  & 6  & 7  & 7  & 7  \\\hline
+            Priorität 3 &    &    & 0  & 1  & 1  & 2  & 3  & 3  & 4  & 4  & 4  & 5  & 6  & 6  & 6  \\\hline
+            Priorität 4 &    &    &    & 0  & 0  & 1  &2   &2   & 3  & 3  & 3  & 4  & 5  & 5  & 5  \\
+      \hline\hline
+            Seitenfehler  & x  & x  & x  & x  &   & x  & x  &   & x  &   &   & x  & x  &   &   \\
+      \hline
+      \multicolumn{16}{l}{\textbf{Seitenfehler: 9}}\\
+      \end{tabular}
+      \end{center}
+
+      \vfill
+
+      \begin{center}
+            \begin{tabular}{|r||r|r|r|r|r|r|r|r|r|r|r|r|r|r|r|}
+                \multicolumn{16}{l}{\textbf{Strategie: LRU}}\\
+                \hline
+                     Referenz $\omega$ & 0 & 1 & 2 & 3 & 2 & 4 & 5 & 2 & 6 & 3 & 4 & 7 & 8 & 7 & 8 \\
+                \hline\hline
+                     Rahmen 1    &0&0&0&0&0&4&4&4&4&3&3&3&3&3&3   \\\hline
+                     Rahmen 2    &&1&1&1&1&1&5&5&5&5&4&4&4&4&4   \\\hline
+                     Rahmen 3    &&&2&2&2&2&2&2&2&2&2&7&7&7&7   \\\hline
+                     Rahmen 4    &&&&0&0&1&3&3&4&5&2&6&3&3&3   \\
+                \hline\hline
+                     Priorität 1 &0&1&2&3&2&4&5&2&6&3&4&7&8&7&8   \\\hline
+                     Priorität 2 &&0&1&2&3&2&4&5&2&6&3&4&7&8&7   \\\hline
+                     Priorität 3 &&&0&1&1&3&2&4&5&2&6&3&4&4&4   \\\hline
+                     Priorität 4 &&&&0&0&1&3&3&4&5&2&6&3&3&3   \\
+                \hline\hline
+                     Seitenfehler  &x&x&x&x&&x&x&&x&x&x&x&x&&   \\
+                \hline
+                \multicolumn{16}{l}{\textbf{Seitenfehler: 11}}\\
+            \end{tabular}
+            \end{center}
+            
+
+\end{document}
